@@ -30,6 +30,7 @@ function App() {
 
   return(
     <div className='App'>
+      <Header handleBtnHeaderClick={handleBtnHeaderClick}><NavTab isHidden={isMenuHidden} /></Header>
       <Routes>
         <Route path='/signup' element={
           <Register>
@@ -41,9 +42,8 @@ function App() {
             <FormAuth formName='login' />
           </Login>
         } />
-        <Route path='/about-project' element={
+        <Route exact path='/' element={
           <>
-            <Header handleBtnHeaderClick={handleBtnHeaderClick}><NavTab isHidden={isMenuHidden} /></Header>
             <Main>
               <Promo />
               <AboutProject />
@@ -52,14 +52,13 @@ function App() {
                 <Portfolio />
               </AboutMe>
             </Main>
-            <Footer>
-              <Navigation />
-            </Footer>
           </>
         } />
-        <Route exact path='/' element={<Navigate to='/about-project' />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
+      <Footer>
+        <Navigation />
+      </Footer>
     </div>
   );
 }

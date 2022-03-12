@@ -12,8 +12,6 @@
   display: none;
 }
 
-/* path='/about-project'  */
-
 .menu__link-landing{
   padding: 0;
   margin-left: 30px;
@@ -43,8 +41,6 @@
 .menu__link-ladning_type_btn:hover {
   opacity: 0.6;
 }
-
-/* path='/main'  */
 
 .menu__link {
   padding: 0;
@@ -77,11 +73,12 @@
   font-size: 14px;
   line-height: 16px;
   border-radius: 20px;
+  color: #000000;
   background-color: #F9F9F9;
   text-decoration: transparent;
   transition: 0.4s;
 }
 
 .menu__link-btn:hover {
-  opacity: 0.6;
+  background-color: #2BE080;
 }

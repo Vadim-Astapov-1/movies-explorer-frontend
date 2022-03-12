@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
 
 import Header from '../Header/Header';
@@ -16,6 +16,7 @@ import NotFound from '../Not-found/NotFound';
 import Register from '../Register/Register';
 import FormAuth from '../FormAuth/FormAuth';
 import Login from '../Login/Login';
+import Profile from '../Profile/Profile';
 
 function App() {
   const [isMenuHidden, setIsMenuHidden] = useState(true);
@@ -54,6 +55,7 @@ function App() {
             </Main>
           </>
         } />
+        <Route path='/profile' element={<Profile />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
       <Footer>

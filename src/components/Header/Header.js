@@ -1,8 +1,8 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import logo from '../../images/logo.svg';
 import './Header.css';
-import { routers } from '../../utils/constans';
+import { headerRouters } from '../../utils/constans';
 
 function Header({ handleBtnHeaderClick, children }) {
   const location = useLocation();
@@ -12,11 +12,11 @@ function Header({ handleBtnHeaderClick, children }) {
   }
 
   return(
-    checkRouter(routers) ? (
-      <header className="header">
+    checkRouter(headerRouters) ? (
+      <header className={`header ${location.pathname === '/' ? 'header_color_dark-blue' : ''}`}>
       <div className="header__container">
-      <img src={logo} alt="Логотип" className="header__logo" />
-      <button className="header__btn" onClick={handleBtnHeaderClick} ></button>
+      <Link to="/" className='logo header__logo'><img src={logo} alt="Логотип" /></Link>
+      {location.pathname === '/' ? '' : <button className="header__btn" onClick={handleBtnHeaderClick} ></button>}
       {children}
       </div>
     </header>

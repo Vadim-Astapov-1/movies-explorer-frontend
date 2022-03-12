@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { routers } from '../../utils/constans';
+import { footerRouters } from '../../utils/constans';
 import './Footer.css';
 
 function Footer({ children }) {
@@ -11,7 +11,7 @@ function Footer({ children }) {
   }
 
   return(
-    checkRouter(routers) ? (
+    checkRouter(footerRouters) ? (
       <footer className='footer'>
       <h2 className='footer__title'>Учебный проект Яндекс.Практикум х BeatFilm.</h2>
       <div className='footer__container'>

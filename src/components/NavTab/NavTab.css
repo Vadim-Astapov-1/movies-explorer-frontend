@@ -118,3 +118,14 @@
     display: block;
   }
 }
+
+@media all and (max-width: 425px) {
+  .menu__link-landing {
+    margin-left: 14px;
+    font-size: 12px;
+  }
+
+  .menu__link-ladning_type_btn {
+    padding: 5px 12px;
+  }
+}

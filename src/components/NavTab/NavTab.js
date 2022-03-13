@@ -5,9 +5,11 @@ import './NavTab.css';
 function NavTab({ loggedIn, handleBtnNavClick }) {
   const location = useLocation();
 
+  // После ревью заменить location.pathname на !loggedIn, чтобы на главной странице
+  // авторизированный пользователь видел ссылки на фильмы.
   return(
     <nav className='menu'>
-    {!loggedIn ? (
+    {location.pathname === '/' ? (
       <>
       <Link to="/signup" className="menu__link-landing">Регистрация</Link>
       <Link to="/signin" className="menu__link-landing menu__link-ladning_type_btn">Войти</Link>
@@ -20,6 +22,7 @@ function NavTab({ loggedIn, handleBtnNavClick }) {
       <button className="menu__btn" onClick={handleBtnNavClick}></button>
       </>
     )}
+    {}
     </nav>
   );
 }

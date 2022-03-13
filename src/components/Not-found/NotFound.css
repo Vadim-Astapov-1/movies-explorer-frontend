@@ -29,7 +29,7 @@
 
 .error-page__link {
   max-width: 42px;
-  margin: 184px auto 60px;
+  margin: 184px auto 0;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -48,13 +48,9 @@
   .error-page__title {
     margin-top: 408px;
   }
-
-  .error-page__link {
-    margin-bottom: 222px;
-  }
 }
 
-@media all and (max-width: 425px) {
+@media all and (max-width: 470px) {
   .error-page__title {
     margin-top: 329px;
     font-size: 80px;
@@ -68,8 +64,6 @@
   }
 
   .error-page__link {
-    margin-bottom: 284px;
-    margin-bottom: 30px;
     font-size: 12px;
     line-height: 15px;
   }

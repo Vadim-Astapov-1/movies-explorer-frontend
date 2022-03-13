@@ -1,8 +1,9 @@
 import React from 'react';
 import './AboutMe.css';
 import studentImg from '../../images/student.png';
+import Portfolio from '../Portfolio/Portfolio';
 
-function AboutMe({ children }) {
+function AboutMe() {
 
   return(
     <section className='about-me'>
@@ -20,7 +21,7 @@ function AboutMe({ children }) {
         <li><a href='https://github.com/Vadim-Astapov-1?tab=repositories' className='about-me__link' target='_blank'>Github</a></li>
       </ul>
       <img src={studentImg} alt='Изображение студента' className='about-me__image'></img>
-      {children}
+      <Portfolio />
     </section>
   );
 }

@@ -33,34 +33,13 @@ function App() {
     <div className='App'>
       <Header handleBtnHeaderClick={handleBtnHeaderClick}><NavTab isHidden={isMenuHidden} /></Header>
       <Routes>
-        <Route path='/signup' element={
-          <Register>
-            <FormAuth formName='register' />
-          </Register>
-        } />
-        <Route path='/signin' element={
-          <Login>
-            <FormAuth formName='login' />
-          </Login>
-        } />
-        <Route exact path='/' element={
-          <>
-            <Main>
-              <Promo />
-              <AboutProject />
-              <Techs />
-              <AboutMe>
-                <Portfolio />
-              </AboutMe>
-            </Main>
-          </>
-        } />
+        <Route path='/signup' element={<Register />} />
+        <Route path='/signin' element={<Login />} />
+        <Route exact path='/' element={<Main />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
-      <Footer>
-        <Navigation />
-      </Footer>
+      <Footer />
     </div>
   );
 }

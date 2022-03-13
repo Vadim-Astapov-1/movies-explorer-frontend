@@ -1,10 +1,17 @@
 import React from 'react';
+import AboutMe from '../AboutMe/AboutMe';
+import AboutProject from '../AboutProject/AboutProject';
+import Promo from '../Promo/Promo';
+import Techs from '../Techs/Techs';
 import './Main.css';
 
-function Main({ children }) {
+function Main() {
   return(
     <main className='content'>
-      {children}
+      <Promo />
+      <AboutProject />
+      <Techs />
+      <AboutMe />
     </main>
   );
 }

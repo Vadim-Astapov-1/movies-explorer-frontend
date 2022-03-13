@@ -1,27 +1,23 @@
-import React, { useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import './App.css';
 
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Main from '../Main/Main';
-import Promo from '../Promo/Promo';
-import AboutProject from '../AboutProject/AboutProject';
-import Techs from '../Techs/Techs';
-import Portfolio from '../Portfolio/Portfolio';
-import Navigation from '../Navigation/Navigation';
-import AboutMe from '../AboutMe/AboutMe';
 import NavTab from '../NavTab/NavTab';
 import NotFound from '../Not-found/NotFound';
 import Register from '../Register/Register';
-import FormAuth from '../FormAuth/FormAuth';
 import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
+import Navigation from '../Navigation/Navigation';
 
 function App() {
+  const location = useLocation();
   const [isMenuHidden, setIsMenuHidden] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
 
-  function handleBtnHeaderClick() {
+  function handleBtnNavClick() {
     if(isMenuHidden) {
       setIsMenuHidden(false);
     } else {
@@ -29,9 +25,13 @@ function App() {
     }
   }
 
+  useEffect(() => {
+    setIsMenuHidden(true);
+  }, [location.pathname]);
+
   return(
     <div className='App'>
-      <Header handleBtnHeaderClick={handleBtnHeaderClick}><NavTab isHidden={isMenuHidden} /></Header>
+      <Header><NavTab loggedIn={loggedIn} handleBtnNavClick={handleBtnNavClick} /></Header>
       <Routes>
         <Route path='/signup' element={<Register />} />
         <Route path='/signin' element={<Login />} />
@@ -39,6 +39,7 @@ function App() {
         <Route path='/profile' element={<Profile />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
+      <Navigation isHidden={isMenuHidden} handleBtnNavClick={handleBtnNavClick} />
       <Footer />
     </div>
   );

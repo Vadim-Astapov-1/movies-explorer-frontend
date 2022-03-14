@@ -103,7 +103,7 @@
   color: #ff3055;
   opacity: 0;
   transition: 0.4s;
-  text-align: center;
+  text-align: right;
 }
 
 .form-auth__input-error_active {

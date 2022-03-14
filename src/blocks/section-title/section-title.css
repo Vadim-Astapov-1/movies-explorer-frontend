@@ -8,3 +8,11 @@
   color: #000000;
   letter-spacing: -0.04em;
 }
+
+@media all and (max-width: 425px) {
+  .section-title {
+    font-size: 18px;
+    line-height: 22px;
+    padding: 0 0 28px 0;
+  }
+}

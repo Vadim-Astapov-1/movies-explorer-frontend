@@ -9,17 +9,17 @@ function Navigation({ loggedIn, handleBtnNavClick }) {
   // авторизированный пользователь видел ссылки на фильмы.
   return(
     <nav className='navigation'>
-    {location.pathname === '/' ? (
+    {location.pathname === '/a' ? (
       <>
       <Link to="/signup" className="navigation__link-landing">Регистрация</Link>
       <Link to="/signin" className="navigation__link-landing navigation__link-ladning_type_btn">Войти</Link>
       </>
     ) : (
       <>
-      <Link to="/movies" className="navigation__link">Фильмы</Link>
-      <Link to="/saved-movies" className="navigation__link navigation__link_font_regular">Сохранённые фильмы</Link>
+      <Link to="/movies" className={`navigation__link ${location.pathname === '/' ? 'navigation__link_place_main' : ''}`}>Фильмы</Link>
+      <Link to="/saved-movies" className={`navigation__link navigation__link_font_regular ${location.pathname === '/' ? 'navigation__link_place_main' : ''}`}>Сохранённые фильмы</Link>
       <Link to="/profile" className="navigation__link-btn">Аккаунт</Link>
-      <button className="navigation__btn" onClick={handleBtnNavClick}></button>
+      <button className={`navigation__btn ${location.pathname === '/' ? 'navigation__btn_place_main' : ''}`} onClick={handleBtnNavClick}></button>
       </>
     )}
     {}

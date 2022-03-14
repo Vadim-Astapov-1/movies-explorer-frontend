@@ -64,6 +64,14 @@
   font-weight: 400;
 }
 
+.navigation__link_place_main {
+  color: #FFFFFF;
+}
+
+.navigation__link_place_main:hover {
+  text-decoration: underline rgba(255, 255, 255, 0.7);
+}
+
 .navigation__link-btn {
   align-items: flex-end;
   margin: 0 0 0 auto;
@@ -102,7 +110,15 @@
 }
 
 .navigation__btn:hover {
-  background-color: rgba(160, 160, 160, 0.4);
+  background-color: rgba(160, 160, 160, 0.6);
+}
+
+.navigation__btn_place_main {
+  background-color:#2BE080;
+}
+
+.navigation__btn_place_main:hover {
+  background-color: rgba(43, 224, 128, 0.6);
 }
 
 @media all and (max-width: 768px) {

@@ -8,6 +8,7 @@ function AboutMe() {
   return(
     <section className='about-me'>
       <h2 className='section-title about-me__title'>Студент</h2>
+      <img src={studentImg} alt='Изображение студента' className='about-me__image'></img>
       <p className='about-me__student'>Виталий</p>
       <p className='about-me__status'>Фронтенд-разработчик, 30 лет</p>
       <p className='about-me__description'>
@@ -20,7 +21,6 @@ function AboutMe() {
         <li><a href='https://www.facebook.com/profile.php?id=100021774372638' className='about-me__link' target='_blank'>Facebook</a></li>
         <li><a href='https://github.com/Vadim-Astapov-1?tab=repositories' className='about-me__link' target='_blank'>Github</a></li>
       </ul>
-      <img src={studentImg} alt='Изображение студента' className='about-me__image'></img>
       <Portfolio />
     </section>
   );

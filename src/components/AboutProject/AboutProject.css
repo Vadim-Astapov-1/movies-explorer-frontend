@@ -14,10 +14,15 @@
   margin-top: 70px;
   max-width: 100%;
   display: grid;
-  grid-template-columns: repeat(2, minmax(319px, 550px));
+  grid-template-columns: repeat(2, minmax(280px, 550px));
   grid-template-rows: auto;
-  row-gap: 26px;
   column-gap: 40px;
+}
+
+.about-project__column {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
 }
 
 .about-project__subtitle {
@@ -27,12 +32,14 @@
   font-weight: normal;
   font-size: 20px;
   line-height: 24px;
+  letter-spacing: -0.04em;
   color: #000000;
 }
 
 .about-project__text {
   padding: 0;
   margin: 0;
+  margin-top: 26px;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -44,7 +51,7 @@
   margin: 110px 0;
   max-width: 100%;
   display: grid;
-  grid-template-columns: minmax(100px, 228px) minmax(184px, 912px);
+  grid-template-columns: 20% 80%;
   grid-template-rows: auto;
   row-gap: 14px;
   column-gap: 0;
@@ -83,4 +90,80 @@
   }
 }
 
+
+@media all and (max-width: 768px) {
+  .about-project {
+    max-width: calc(100% - 100px);
+  }
+
+  .about-project__title {
+    margin-top: 90px;
+  }
+
+  .about-project__columns {
+    grid-template-columns: repeat(2, minmax(250px, 319px));
+    column-gap: 30px;
+  }
+
+  .about-project__text {
+    margin-top: 22px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .about-project__grafik {
+    grid-template-columns: minmax(100px, 140px) minmax(184px, 528px);
+    margin: 93px 0 90px;
+  }
+}
+
+@media all and (max-width: 700px) {
+  .about-project__columns {
+    grid-template-columns: 1fr;
+    row-gap: 56px;
+  }
+}
+
+@media all and (max-width: 425px) {
+  .about-project {
+    max-width: calc(100% - 36px);
+  }
+
+  .about-project__title {
+    margin-top: 70px;
+  }
+
+  .about-project__columns {
+    margin-top: 60px;
+    grid-template-columns: 1fr;
+  }
+
+  .about-project__subtitle {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .about-project__text {
+    margin-top: 16px;
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .about-project__grafik {
+    grid-template-columns: minmax(80px, 140px) minmax(164px, 528px);
+    row-gap: 10px;
+    margin: 60px 0 70px;
+  }
+
+  .about-project__time-icon {
+    font-size: 11px;
+    line-height: 13px;
+    padding: 11px 0;
+  }
+
+  .about-project__subtitle-icon {
+    font-size: 11px;
+    line-height: 13px;
+  }
+}
 

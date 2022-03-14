@@ -5,11 +5,11 @@ import './App.css';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Main from '../Main/Main';
-import NavTab from '../NavTab/NavTab';
 import NotFound from '../Not-found/NotFound';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
+import SideBar from '../SideBar/SideBar';
 import Navigation from '../Navigation/Navigation';
 
 function App() {
@@ -31,7 +31,7 @@ function App() {
 
   return(
     <div className='App'>
-      <Header><NavTab loggedIn={loggedIn} handleBtnNavClick={handleBtnNavClick} /></Header>
+      <Header><Navigation loggedIn={loggedIn} handleBtnNavClick={handleBtnNavClick} /></Header>
       <Routes>
         <Route path='/signup' element={<Register />} />
         <Route path='/signin' element={<Login />} />
@@ -39,7 +39,7 @@ function App() {
         <Route path='/profile' element={<Profile />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
-      <Navigation isHidden={isMenuHidden} handleBtnNavClick={handleBtnNavClick} />
+      <SideBar isHidden={isMenuHidden} handleBtnNavClick={handleBtnNavClick} />
       <Footer />
     </div>
   );

@@ -1,69 +1,72 @@
-.sidebar-menu {
-  position: fixed;
-  width: 100%;
-  height: 100%;
+.navigation {
+  width: 1058px;
+  max-width: 1058px;
   display: flex;
+  flex-direction: row;
+  margin: auto 0;
   align-items: center;
   justify-content: flex-end;
-  top: 0;
-  right: 0;
-  z-index: 1;
-  background-color:rgba(0, 0, 0, 0.3);
-  visibility: hidden;
 }
 
-.sidebar-menu_type_visible {
-  visibility: visible;
-  right: 0;
+.navigation_type_invisible {
+  display: none;
 }
 
-.sidebar-menu__container {
-  width: 67.7%;
-  height: 100%;
-  background-color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 0;
-  right: -100%;
-  transition: 0.4s ease right;
-}
-
-.sidebar-menu__container_type_visible {
-  right: 0;
-}
-
-.sibebar-menu__link {
-  max-width: 340px;
-  padding-bottom: 4px;
-  margin: 0 auto 22px;
+.navigation__link-landing{
+  padding: 0;
+  margin-left: 30px;
   font-style: normal;
   font-weight: 500;
-  font-size: 18px;
-  line-height: 22px;
+  font-size: 12px;
+  line-height: 16px;
+  color: #FFFFFF;
+  text-decoration: transparent;
+  transition: 0.4s;
+}
+
+.navigation__link-ladning_type_btn {
+  padding: 8px 20px;
+  border-radius: 3px;
+  background-color: #2BE080;
   color: #000000;
-  text-decoration: none;
-  transition: 0.4s ease right;
 }
 
-.sibebar-menu__link:hover {
-  color: #2BE080;
+.navigation__link-landing:not(.navigation__link-ladning_type_btn):hover {
+  opacity: 0.8;
+  text-decoration: underline rgba(255, 255, 255, 0.8);
+  background-color: #073042;
+  color: #FFFFFF;
 }
 
-.sibebar-menu__link:first-child {
-  margin-top: 159px;
+.navigation__link-ladning_type_btn:hover {
+  opacity: 0.6;
 }
 
-.sibebar-menu__link_place_hier {
-  border-bottom: 2px solid #000000;
+.navigation__link {
+  padding: 0;
+  margin-right: 16px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 18px;
+  color: #000000;
+  opacity: 1;
+  text-decoration-color: transparent;
+  transition: 0.4s;
 }
 
-.sibebar-menu__link_place_hier:hover {
-  border-color: #2BE080;
+.navigation__link:hover {
+  opacity: 0.7;
+  text-decoration: underline rgba(0, 0, 0, 0.7);
 }
 
-.sibebar-menu__link-btn {
-  margin: 593px auto 0;
+.navigation__link_font_regular {
+  font-weight: 400;
+}
+
+.navigation__link-btn {
+  align-items: flex-end;
+  margin: 0 0 0 auto;
   padding: 8px 20px;
   font-style: normal;
   font-weight: 500;
@@ -72,47 +75,57 @@
   border-radius: 20px;
   color: #000000;
   background-color: #F9F9F9;
-  text-decoration: none;
-  transition: 0.4s ease right;
+  text-decoration: transparent;
+  transition: 0.4s;
 }
 
-.sibebar-menu__link-btn:hover {
+.navigation__link-btn:hover {
   background-color: #2BE080;
 }
 
-.sibebar-menu__close-btn {
-  width: 22px;
-  height: 22px;
-  position: absolute;
-  top: 22.44px;
-  right: 22.44px;
-  background-image: url(../../images/close-btn.svg);
-  background-color: #ffffff;
-  background-repeat: no-repeat;
-  background-size: cover;
+.navigation__btn {
+  display: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  margin-right: 0;
+  margin-top: 15px;
+  margin-bottom: 15px;
   border: 0;
+  cursor: pointer;
+  background-image: url(../../images/icon-menu.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #ffffff;
+  border-radius: 50%;
+  transition: 0.4s;
 }
 
-.sibebar-menu__close-btn:hover {
-  opacity: 0.6;
+.navigation__btn:hover {
+  background-color: rgba(160, 160, 160, 0.4);
+}
+
+@media all and (max-width: 768px) {
+  .navigation__link {
+    display: none;
+  }
+
+  .navigation__link-btn {
+    display: none;
+  }
+
+  .navigation__btn {
+    display: block;
+  }
 }
 
 @media all and (max-width: 425px) {
-  .sidebar-menu__container {
-    width: 100%;
+  .navigation__link-landing {
+    margin-left: 14px;
+    font-size: 12px;
   }
 
-  .sibebar-menu__link {
-    max-width: 300px;
-    margin-bottom: 15px;
-    padding-bottom: 7px;
-  }
-
-  .sibebar-menu__link:first-child {
-    margin-top: 144px;
-  }
-
-  .sibebar-menu__link-btn {
-    margin-top: 422px;
+  .navigation__link-ladning_type_btn {
+    padding: 5px 12px;
   }
 }

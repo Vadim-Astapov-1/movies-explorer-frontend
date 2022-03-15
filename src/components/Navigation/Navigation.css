@@ -110,10 +110,6 @@
 }
 
 .navigation__btn:hover {
-  background-color: rgba(160, 160, 160, 0.6);
-}
-
-.navigation__btn_place_main {
   background-color:#2BE080;
 }
 

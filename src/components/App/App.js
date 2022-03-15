@@ -11,11 +11,34 @@ import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
 import SideBar from '../SideBar/SideBar';
 import Navigation from '../Navigation/Navigation';
+import Movies from '../Movies/Movies';
+import SavedMovies from '../SavedMovies/SavedMovies';
+import InfoTooltip from '../InfoTooltip/InfoTooltip';
 
 function App() {
   const location = useLocation();
   const [isMenuHidden, setIsMenuHidden] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
+  const [tooltipSuccess, setTooltipSuccess] = useState(false);
+
+  function closePopup() {
+    setIsInfoTooltipOpen(false);
+  }
+
+  function closeMenu() {
+    setIsMenuHidden(true);
+  }
+
+  function closeOnOutside(evt) {
+    if (evt.target.classList.contains('popup')) {
+      closePopup();
+    }
+
+    if (evt.target.classList.contains('sidebar-menu')) {
+      closeMenu();
+    }
+  }
 
   function handleBtnNavClick() {
     if(isMenuHidden) {
@@ -36,11 +59,14 @@ function App() {
         <Route path='/signup' element={<Register />} />
         <Route path='/signin' element={<Login />} />
         <Route exact path='/' element={<Main />} />
+        <Route path='/movies' element={<Movies />} />
+        <Route path='/saved-movies' element={<SavedMovies />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
-      <SideBar isHidden={isMenuHidden} handleBtnNavClick={handleBtnNavClick} />
       <Footer />
+      <SideBar isHidden={isMenuHidden} handleBtnNavClick={handleBtnNavClick} onOutSideClick={closeOnOutside} />
+      <InfoTooltip status={tooltipSuccess} isOpen={isInfoTooltipOpen} onClose={closePopup} onOutSideClick={closeOnOutside} />
     </div>
   );
 }

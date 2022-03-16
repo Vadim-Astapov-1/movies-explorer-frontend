@@ -20,7 +20,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy-server": "npm run build && scp -r ./build/* mrchibichan@51.250.30.213:/home/mrchibichan/movies-explorer-frontend/build"
   },
   "eslintConfig": {
     "extends": [

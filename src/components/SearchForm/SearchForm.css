@@ -32,14 +32,14 @@
 .search__submit-btn {
   padding: 17px 0;
   margin: 10px 10px 10px 0;
-  background-color: #3456F3;
+  background-color: #3456f3;
   border: 0;
   border-radius: 5px;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
   line-height: 18px;
-  color: #FFFFFF;
+  color: #ffffff;
   transition: 0.4s;
   cursor: pointer;
 }
@@ -82,4 +82,3 @@
     padding: 13px 0;
   }
 }
-

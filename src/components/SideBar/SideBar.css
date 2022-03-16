@@ -8,7 +8,7 @@
   top: 0;
   right: 0;
   z-index: 1;
-  background-color:rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.3);
   visibility: hidden;
   cursor: pointer;
 }
@@ -49,7 +49,7 @@
 }
 
 .sidebar-menu__link:hover {
-  color: #2BE080;
+  color: #2be080;
 }
 
 .sidebar-menu__link:first-child {
@@ -61,7 +61,7 @@
 }
 
 .sidebar-menu__link_place_hier:hover {
-  border-color: #2BE080;
+  border-color: #2be080;
 }
 
 .sidebar-menu__link-btn {
@@ -73,13 +73,13 @@
   line-height: 16px;
   border-radius: 20px;
   color: #000000;
-  background-color: #F9F9F9;
+  background-color: #f9f9f9;
   text-decoration: none;
   transition: 0.4s ease right;
 }
 
 .sidebar-menu__link-btn:hover {
-  background-color: #2BE080;
+  background-color: #2be080;
 }
 
 .sidebar-menu__close-btn {

@@ -1,13 +1,10 @@
 import React from 'react';
-import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import SearchForm from '../SearchForm/SearchForm';
 import './SavedMovies.css';
 
-function SavedMovies() {
+function SavedMovies({ children }) {
   return(
     <section className='saved-movies'>
-      <SearchForm />
-      <MoviesCardList />
+      {children}
     </section>
   );
 }

@@ -65,12 +65,12 @@
   font-size: 14px;
   line-height: 17px;
   text-align: center;
-  background-color: #2BE080;
+  background-color: #2be080;
   color: #000000;
 }
 
 .about-project__time-icon:nth-child(2) {
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
 }
 
 .about-project__subtitle-icon {
@@ -81,7 +81,7 @@
   font-size: 14px;
   line-height: 17px;
   text-align: center;
-  color: #A0A0A0;
+  color: #a0a0a0;
 }
 
 @media all and (max-width: 1280px) {
@@ -89,7 +89,6 @@
     max-width: calc(100% - 140px);
   }
 }
-
 
 @media all and (max-width: 768px) {
   .about-project {
@@ -166,4 +165,3 @@
     line-height: 13px;
   }
 }
-

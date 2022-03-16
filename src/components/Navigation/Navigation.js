@@ -22,7 +22,6 @@ function Navigation({ loggedIn, handleBtnNavClick }) {
       <button className='navigation__btn' onClick={handleBtnNavClick}></button>
       </>
     )}
-    {}
     </nav>
   );
 }

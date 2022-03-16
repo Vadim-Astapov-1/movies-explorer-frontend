@@ -14,6 +14,9 @@ import Navigation from '../Navigation/Navigation';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
+import SearchForm from '../SearchForm/SearchForm';
+import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import Preloader from '../Preloader/Preloader';
 
 function App() {
   const location = useLocation();
@@ -59,8 +62,20 @@ function App() {
         <Route path='/signup' element={<Register />} />
         <Route path='/signin' element={<Login />} />
         <Route exact path='/' element={<Main />} />
-        <Route path='/movies' element={<Movies />} />
-        <Route path='/saved-movies' element={<SavedMovies />} />
+        <Route path='/movies' element={
+          <Movies>
+            <SearchForm />
+            <MoviesCardList />
+            <Preloader />
+          </Movies>
+          } />
+        <Route path='/saved-movies' element={
+          <SavedMovies>
+            <SearchForm />
+            <MoviesCardList />
+            <Preloader />
+          </SavedMovies>
+          } />
         <Route path='/profile' element={<Profile />} />
         <Route path='*' element={<NotFound />} />
       </Routes>

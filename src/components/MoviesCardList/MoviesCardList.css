@@ -1,0 +1,109 @@
+.movies-cards {
+  max-width: 1140px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.movies-cards__container {
+  max-width: 100%;
+  margin: 70px 0 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  align-items: flex-start;
+  grid-auto-flow: row;
+  grid-template-rows: min-content;
+  column-gap: 20px;
+  row-gap: 32px;
+}
+
+.movies-cards__btn-zone {
+  max-width: 100%;
+  padding-top: 50px;
+  padding-bottom: 80px;
+  display: flex;
+  justify-content: center;
+}
+
+.movies-cards__btn {
+  width: 320px;
+  max-width: 320px;
+  margin: 0 auto;
+  padding-top: 11px;
+  padding-bottom: 9px;
+  border: 1px solid #e8e8e8;
+  background-color: #ffffff;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  align-self: center;
+  color: #000000;
+  transition: 0.4s;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.movies-cards__btn_type_none {
+  display: none;
+}
+
+.movies-cards__btn:hover {
+  background-color: #e8e8e8;
+}
+
+.movies-cards__subtitle {
+  max-width: 300px;
+  margin: 0;
+  padding: 0;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 20px;
+  color: #a0a0a0;
+  grid-column: 1 / 3;
+}
+
+@media all and (max-width: 1280px) {
+  .movies-cards {
+    max-width: calc(100% - 140px);
+  }
+}
+
+@media all and (max-width: 768px) {
+  .movies-cards {
+    max-width: calc(100% - 60px);
+  }
+
+  .movies-cards__container {
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    column-gap: 30px;
+    row-gap: 36px;
+  }
+}
+
+@media all and (max-width: 630px) {
+  .movies-cards__container {
+    margin-top: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 339px));
+    row-gap: 20px;
+    justify-content: center;
+  }
+}
+
+@media all and (max-width: 425px) {
+  .movies-cards {
+    max-width: calc(100% - 20px);
+    margin-top: 40px;
+  }
+
+  .movies-cards__container {
+    margin-top: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 339px));
+    row-gap: 20px;
+  }
+
+  .movies-cards__btn {
+    max-width: 240px;
+  }
+}

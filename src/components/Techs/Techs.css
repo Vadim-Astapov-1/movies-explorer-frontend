@@ -105,6 +105,10 @@
 }
 
 @media all and (max-width: 425px) {
+  .techs {
+    background-color: #ffffff;
+  }
+
   .techs__container {
     max-width: calc(100% - 36px);
   }

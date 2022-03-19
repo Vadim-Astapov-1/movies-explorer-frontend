@@ -64,12 +64,7 @@
   line-height: 12px;
   color: #ff3055;
   margin: 10px 0;
-  opacity: 0;
   transition: 0.4s;
-}
-
-.auth__input-error_active {
-  opacity: 1;
 }
 
 .auth__submit-btn {
@@ -87,7 +82,7 @@
   transition: 0.4s;
 }
 
-.auth__submit-btn_type_inactive {
+.auth__submit-btn:disabled {
   color: #000000;
   background-color: #e5e5e5;
   pointer-events: none;

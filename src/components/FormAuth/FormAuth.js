@@ -3,7 +3,7 @@ import { useLocation, Link } from 'react-router-dom';
 import './FormAuth.css';
 import logo from '../../images/logo.svg';
 
-function FormAuth({ name, title, buttonText, subtitle, link, linkText, children }) {
+function FormAuth({ name, title, buttonText, subtitle, link, linkText, valid, children }) {
   const location = useLocation();
 
   return(
@@ -12,7 +12,7 @@ function FormAuth({ name, title, buttonText, subtitle, link, linkText, children 
       <h2 className='auth__title'>{title}</h2>
       <form className={`auth__form auth__form_type_${name}`} noValidate>
         {children}
-        <button type='submit' className={`auth__submit-btn ${location.pathname === '/signin' && 'auth__submit-btn_place_login'}`}>{buttonText}</button>
+        <button type='submit' className={`auth__submit-btn ${location.pathname === '/signin' && 'auth__submit-btn_place_login'}`} disabled={!valid && true}>{buttonText}</button>
       </form>
       <p className='auth__subtitle'>{subtitle} <Link to={link} className='auth__link'>{linkText}</Link></p>
     </section>

@@ -9,7 +9,9 @@ export const footerRouters = [
   '/',
   '/movies',
   '/saved-movies',
-]
+];
+
+export const regex = /^[a-zа-яё\s-]+$/i;
 
 export const testUser = {
   name: 'Виталий',

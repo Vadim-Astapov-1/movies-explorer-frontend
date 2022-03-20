@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import FormAuth from '../FormAuth/FormAuth';
 import { Validation } from '../Validation/Validation';
 
@@ -8,13 +8,8 @@ function Login({ onLogin }) {
   function handleSubmit(evt) {
     evt.preventDefault();
 
-    console.log(validation.values)
     onLogin(validation.values.email, validation.values.password);
   }
-
-  useEffect(() => {
-    validation.resetForm();
-  }, []);
 
   return(
     <FormAuth name='login' title='Рады видеть!' buttonText='Войти' subtitle='Ещё не зарегистрированы?' link='/signup' linkText='Регистрация' onSubmit={handleSubmit} valid={validation.isValid}>

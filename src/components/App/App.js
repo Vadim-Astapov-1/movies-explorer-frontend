@@ -28,8 +28,10 @@ function App() {
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [tooltipSuccess, setTooltipSuccess] = useState(false);
   const [movies, setMovies] = useState([]);
+  const [formError, setFormError] = useState('');
 
   const [currentUser, setCurrentUser] = useState({
+    _id: '',
     name: '',
     email: '',
   });
@@ -66,13 +68,13 @@ function App() {
   function handleUpdateProfile(name, email) {
     mainApi.editProfile(name, email)
       .then((res) => {
-        console.log(res)
-        //setCurrentUser(userInfo);
+        setCurrentUser(res);
       })
       .then(() => {
         //closeAllPopups();
       })
       .catch((err) => {
+
         console.log(err);
       });
   }
@@ -81,13 +83,15 @@ function App() {
     mainApi.register(name, email, password)
       .then((res) => {
         //setTooltipSuccess(true);
-        console.log(res.data)
         setCurrentUser(res.data);
         navigate('/movies');
       })
       .catch((err) => {
-        //setTooltipSuccess(false);
         console.log(err);
+        if(err === 'Ошибка: 409') {
+          return setFormError('Данный E-mail уже занят');
+        }
+        setFormError('Во время запроса произошла ошибка. Подождите немного и попробуйте ещё раз');
       })
       .finally(() => {
         //setIsTooltipPopupOpen(true);
@@ -102,6 +106,7 @@ function App() {
         navigate('/movies');
       })
       .catch((err) => {
+        setFormError('Неверный логин или пароль');
         //setTooltipSuccess(false);
         //setIsTooltipPopupOpen(true);
         console.log(err);
@@ -132,6 +137,7 @@ function App() {
 
   useEffect(() => {
     setIsMenuHidden(true);
+    setFormError('');
   }, [location.pathname]);
 
   useEffect(() => {
@@ -143,8 +149,8 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
       <Header><Navigation loggedIn={loggedIn} handleBtnNavClick={handleBtnNavClick} /></Header>
       <Routes>
-        <Route path='/signup' element={<Register onRegister={handleRegister} />} />
-        <Route path='/signin' element={<Login onLogin={handleLoggin} />} />
+        <Route path='/signup' element={<Register onRegister={handleRegister} reqError={formError} />} />
+        <Route path='/signin' element={<Login onLogin={handleLoggin} reqError={formError} />} />
         <Route exact path='/' element={<Main />} />
         <Route path='/movies' element={
           <ProtectedRoute loggedIn={loggedIn}>

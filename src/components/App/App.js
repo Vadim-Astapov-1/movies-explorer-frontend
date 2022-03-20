@@ -21,6 +21,7 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import { mainApi } from '../../utils/MainApi';
+import { moviesApi } from '../../utils/MoviesApi';
 
 function App() {
   const [isMenuHidden, setIsMenuHidden] = useState(true);
@@ -65,18 +66,29 @@ function App() {
     }
   }
 
+  function handleGetMovies() {
+    moviesApi.getMovies()
+      .then((movies) => {
+        setMovies(movies);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   function handleUpdateProfile(name, email) {
     mainApi.editProfile(name, email)
       .then((res) => {
         setCurrentUser(res);
-      })
-      .then(() => {
-        //closeAllPopups();
+        setTooltipSuccess(true);
       })
       .catch((err) => {
-
         console.log(err);
-      });
+      })
+      .finally(() => {
+        setTooltipSuccess(false);
+        setIsInfoTooltipOpen(true);
+      })
   }
 
   function handleRegister(name, email, password) {
@@ -124,6 +136,7 @@ function App() {
     mainApi.logout()
       .then(() => {
         setLoggedIn(false);
+        navigate('/');
       })
       .catch((err) => {
         console.log(err);

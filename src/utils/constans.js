@@ -13,10 +13,8 @@ export const footerRouters = [
 
 export const regex = /^[a-zа-яё\s-]+$/i;
 
-export const testUser = {
-  name: 'Виталий',
-  email: 'pochta@yandex.ru',
-};
+export const errorText = 'Что-то пошло не так! Попробуйте ещё раз.';
+export const successText = 'Профиль обновлен.';
 
 export const testCardList = [
   {

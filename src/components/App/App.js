@@ -82,7 +82,7 @@ function App() {
   function handleRegister(name, email, password) {
     mainApi.register(name, email, password)
       .then((res) => {
-        //setTooltipSuccess(true);
+        setLoggedIn(true);
         setCurrentUser(res.data);
         navigate('/movies');
       })
@@ -92,9 +92,6 @@ function App() {
           return setFormError('Данный E-mail уже занят');
         }
         setFormError('Во время запроса произошла ошибка. Подождите немного и попробуйте ещё раз');
-      })
-      .finally(() => {
-        //setIsTooltipPopupOpen(true);
       })
   }
 
@@ -107,8 +104,6 @@ function App() {
       })
       .catch((err) => {
         setFormError('Неверный логин или пароль');
-        //setTooltipSuccess(false);
-        //setIsTooltipPopupOpen(true);
         console.log(err);
       });
   }

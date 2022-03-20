@@ -2,15 +2,21 @@ import React, { useEffect } from 'react';
 import FormAuth from '../FormAuth/FormAuth';
 import { Validation } from '../Validation/Validation';
 
-function Register() {
+function Register({ onRegister }) {
   let validation = Validation();
+
+  function handleSubmit(evt) {
+    evt.preventDefault();
+
+    onRegister(validation.values.name, validation.values.email, validation.values.password);
+  }
 
   useEffect(() => {
     validation.resetForm();
   }, []);
 
   return(
-    <FormAuth name='register' title='Добро пожаловать!' buttonText='Зарегистрироваться' subtitle='Уже зарегистрированы?' link='/signin' linkText='Войти' valid={validation.isValid}>
+    <FormAuth name='register' title='Добро пожаловать!' buttonText='Зарегистрироваться' subtitle='Уже зарегистрированы?' link='/signin' linkText='Войти' onSubmit={handleSubmit} valid={validation.isValid}>
       <label className='auth__title-input' htmlFor='register-name-input'>Имя</label>
       <input type='text' onChange={validation.handleChange} className={`auth__input ${validation.errors.name ? 'auth__input_invalid' : ''}`} id='register-name-input' name='name' placeholder='Введите имя' minLength='2' maxLength='30' required></input>
       <span className='auth__input-error' id='register-name-input-error'>{validation.errors.name}</span>

@@ -43,5 +43,9 @@ export function Validation() {
       setIsValid(false);
     }, [setValues, setErrors, setIsValid]);
 
-  return { values, handleChange, errors, isValid, resetForm };
+  const fullForm = useCallback((data) => {
+    setValues(data);
+  }, [setValues]);
+
+  return { values, handleChange, errors, isValid, resetForm, fullForm };
 }

@@ -82,7 +82,7 @@
   }
 }
 
-@media all and (max-width: 630px) {
+@media all and (max-width: 647px) {
   .movies-cards__container {
     margin-top: 40px;
     grid-template-columns: repeat(auto-fit, minmax(300px, 339px));

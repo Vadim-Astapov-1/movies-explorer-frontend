@@ -84,19 +84,17 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+        setTooltipSuccess(false);
       })
       .finally(() => {
-        setTooltipSuccess(false);
         setIsInfoTooltipOpen(true);
       })
   }
 
   function handleRegister(name, email, password) {
     mainApi.register(name, email, password)
-      .then((res) => {
-        setLoggedIn(true);
-        setCurrentUser(res.data);
-        navigate('/movies');
+      .then(() => {
+        handleLoggin(email, password);
       })
       .catch((err) => {
         console.log(err);

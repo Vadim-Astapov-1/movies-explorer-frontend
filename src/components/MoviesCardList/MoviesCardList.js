@@ -22,7 +22,7 @@ function MoviesCardList({ movies, handleSaveMovie, handleDeleteMovie }) {
   return(
     <div className='movies-cards'>
       <div className='movies-cards__container'>
-      {movies.map((item) => <MoviesCard key={item.id} card={item} onSave={handleSaveMovie} onDelete={handleDeleteMovie} />)}
+      {movies.map((item) => <MoviesCard key={item.id} movie={item} onSave={handleSaveMovie} onDelete={handleDeleteMovie} />)}
       </div>
       <div className='movies-cards__btn-zone'>
         <button className={`movies-cards__btn ${location.pathname === '/saved-movies' ? 'movies-cards__btn_type_none' : ''}`}>Ещё</button>

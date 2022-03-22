@@ -123,6 +123,7 @@ function App() {
   }
 
   function handleSaveMovie(movie) {
+    console.log(movie)
     mainApi.saveMovie(movie)
       .then((newMovie) => {
         setSavedMovies(savedMovies.map((item) => item._id === movie.id ? newMovie : item));

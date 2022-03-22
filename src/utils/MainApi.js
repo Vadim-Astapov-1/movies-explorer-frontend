@@ -59,6 +59,34 @@ class MainApi {
     })
     .then(this._checkResponse);
   }
+
+  getSavedMovies() {
+    return fetch(`${this._url}/movies`, {
+      method: 'GET',
+      headers: this._headers,
+      credentials: this._credentials,
+    })
+    .then(this._checkResponse);
+  }
+
+  saveMovie(movie) {
+    return fetch(`${this._url}/movies`, {
+      method: 'POST',
+      headers: this._headers,
+      credentials: this._credentials,
+      body: JSON.stringify(movie)
+    })
+    .then(this._checkResponse);
+  }
+
+  deleteMovie(_id) {
+    return fetch(`${this._url}movies/${_id}`, {
+      method: 'DELETE',
+      credentials: this._credentials,
+      headers: this._headers,
+    })
+    .then(this._checkResponse);
+  }
 }
 
 export const mainApi = new MainApi({

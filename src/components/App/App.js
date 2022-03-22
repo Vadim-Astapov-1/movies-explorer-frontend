@@ -22,13 +22,20 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import { mainApi } from '../../utils/MainApi';
 import { moviesApi } from '../../utils/MoviesApi';
+import { errorText, successTextProfile,  errorTextConflict, errorLogin} from '../../utils/constans';
 
 function App() {
   const [isMenuHidden, setIsMenuHidden] = useState(true);
+  // production true
   const [loggedIn, setLoggedIn] = useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [tooltipSuccess, setTooltipSuccess] = useState(false);
+  const [tooltipType, setTooltipType] = useState('');
   const [movies, setMovies] = useState([]);
+  const [savedMovies, setSavedMovies] = useState([]);
+  const [shortMovies, setShortMovies] = useState(false);
+  const [foundMovies, setFoundMovies] = useState([]);
+  const [unfilteredMovies, setUnfilteredMovies] = useState([]);
   const [formError, setFormError] = useState('');
 
   const [currentUser, setCurrentUser] = useState({
@@ -66,6 +73,42 @@ function App() {
     }
   }
 
+  function handleSearchMovies(search) {
+    let moviesList = movies.filter((item) => item.nameRU.toLowerCase().includes(search.toLowerCase()));
+    setUnfilteredMovies(moviesList);
+
+    if(shortMovies) {
+      let shortMoviesList = moviesList.filter((item) => item.duration <= 40);
+      return setFoundMovies(shortMoviesList);
+    }
+
+    setFoundMovies(moviesList);
+  }
+
+  function handleCheckShortMovies(evt) {
+    if(evt.target.checked) {
+      let shortMoviesList = foundMovies.filter((item) => item.duration <= 40);
+      setShortMovies(true);
+      setFoundMovies(shortMoviesList);
+    } else {
+      setShortMovies(false);
+      setFoundMovies(unfilteredMovies);
+    }
+  }
+
+  function handleGetSavedMovies() {
+    mainApi.getSavedMovies()
+      .then((movies) => {
+        setSavedMovies(movies);
+      })
+      .catch((err) => {
+        console.log(err);
+        setTooltipSuccess(false);
+        setTooltipType(errorText);
+        setIsInfoTooltipOpen(true);
+      })
+  }
+
   function handleGetMovies() {
     moviesApi.getMovies()
       .then((movies) => {
@@ -73,6 +116,36 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+        setTooltipSuccess(false);
+        setTooltipType(errorText);
+        setIsInfoTooltipOpen(true);
+      });
+  }
+
+  function handleSaveMovie(movie) {
+    mainApi.saveMovie(movie)
+      .then((newMovie) => {
+        setSavedMovies(savedMovies.map((item) => item._id === movie.id ? newMovie : item));
+        console.log(savedMovies);
+      })
+      .catch((err) => {
+        console.log(err);
+        setTooltipSuccess(false);
+        setTooltipType(errorText);
+        setIsInfoTooltipOpen(true);
+      });
+  }
+
+  function handleDeleteMovie(id, movie) {
+    mainApi.deleteMovie(id)
+      .then(() => {
+        setSavedMovies(savedMovies.filter((item) => item._id !== movie.id));
+      })
+      .catch((err) => {
+        console.log(err);
+        setTooltipSuccess(false);
+        setTooltipType(errorText);
+        setIsInfoTooltipOpen(true);
       });
   }
 
@@ -81,10 +154,15 @@ function App() {
       .then((res) => {
         setCurrentUser(res);
         setTooltipSuccess(true);
+        setTooltipType(successTextProfile);
       })
       .catch((err) => {
         console.log(err);
         setTooltipSuccess(false);
+        if(err === 'Ошибка: 409') {
+          return setTooltipType(errorTextConflict);
+        }
+        setTooltipType(errorText);
       })
       .finally(() => {
         setIsInfoTooltipOpen(true);
@@ -99,9 +177,9 @@ function App() {
       .catch((err) => {
         console.log(err);
         if(err === 'Ошибка: 409') {
-          return setFormError('Данный E-mail уже занят');
+          return setFormError(errorTextConflict);
         }
-        setFormError('Во время запроса произошла ошибка. Подождите немного и попробуйте ещё раз');
+        setFormError(errorText);
       })
   }
 
@@ -113,7 +191,7 @@ function App() {
         navigate('/movies');
       })
       .catch((err) => {
-        setFormError('Неверный логин или пароль');
+        setFormError(errorLogin);
         console.log(err);
       });
   }
@@ -138,6 +216,9 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+        setTooltipSuccess(false);
+        setTooltipType(errorText);
+        setIsInfoTooltipOpen(true);
       });
   }
 
@@ -150,6 +231,13 @@ function App() {
     handleTokenCheck();
   }, []);
 
+  useEffect(() => {
+    if(loggedIn) {
+      handleGetMovies();
+      handleGetSavedMovies();
+    }
+  }, [loggedIn]);
+
   return(
     <div className='App'>
       <CurrentUserContext.Provider value={currentUser}>
@@ -161,18 +249,18 @@ function App() {
         <Route path='/movies' element={
           <ProtectedRoute loggedIn={loggedIn}>
             <Movies>
-              <SearchForm />
-              <MoviesCardList />
+              <SearchForm handleSearchMovies={handleSearchMovies} handleCheckShortMovies={handleCheckShortMovies} />
               <Preloader />
+              <MoviesCardList movies={foundMovies} handleSaveMovie={handleSaveMovie} handleDeleteMovie={handleDeleteMovie} />
             </Movies>
           </ProtectedRoute>
         } />
         <Route path='/saved-movies' element={
           <ProtectedRoute loggedIn={loggedIn}>
-            <SavedMovies>
+            <SavedMovies handleGetSavedMovies={handleGetSavedMovies}>
               <SearchForm />
-              <MoviesCardList />
               <Preloader />
+              <MoviesCardList movies={foundMovies} />
             </SavedMovies>
           </ProtectedRoute>
         } />
@@ -185,7 +273,7 @@ function App() {
       </Routes>
       <Footer />
       <SideBar isHidden={isMenuHidden} handleBtnNavClick={handleBtnNavClick} onOutSideClick={closeOnOutside} />
-      <InfoTooltip status={tooltipSuccess} isOpen={isInfoTooltipOpen} onClose={closePopup} onOutSideClick={closeOnOutside} />
+      <InfoTooltip status={tooltipSuccess} typeError={tooltipType} isOpen={isInfoTooltipOpen} onClose={closePopup} onOutSideClick={closeOnOutside} />
       </CurrentUserContext.Provider>
     </div>
   );

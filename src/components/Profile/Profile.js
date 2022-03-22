@@ -31,7 +31,6 @@ function Profile({ onEdit, onLogout }) {
     setEmail(currentUser.email);
   }, [currentUser]);
 
-
   return(
     <section className='profile'>
       <h2 className='profile__title'>{`Привет, ${currentUser.name}`}</h2>

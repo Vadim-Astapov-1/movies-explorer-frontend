@@ -88,7 +88,6 @@ function App() {
       return shortMoviesList;
     }
 
-
     return moviesList;
   }
 

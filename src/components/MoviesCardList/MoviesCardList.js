@@ -10,6 +10,7 @@ function MoviesCardList({ searchValue, isShortMovies, handleSearchMovies, handle
 
   useEffect(() => {
     let list = handleSearchMovies(movies);
+    setNotFound(false);
 
     if(location.pathname === '/movies' && searchValue === '') {
       return setMoviesList([]);

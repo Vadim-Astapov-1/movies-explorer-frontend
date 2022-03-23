@@ -128,7 +128,7 @@ function App() {
   function handleSaveMovie(movie) {
     mainApi.saveMovie(movie)
       .then((newMovie) => {
-        setSavedMovies(savedMovies.map((item) => item.movieId === movie.movieId ? newMovie : item));
+        setSavedMovies(savedMovies.map((item) => item.movieId !== movie.movieId ? newMovie : item));
       })
       .catch((err) => {
         console.log(err);

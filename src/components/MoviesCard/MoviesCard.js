@@ -6,9 +6,9 @@ import { serverLink } from '../../utils/constans';
 function MoviesCard({ movie, onSave, onDelete, isChecked }) {
   const location = useLocation();
 
-  function calculateTime() {
-    let hour = Math.floor(movie.duration / 60);
-    let min = movie.duration % 60;
+  function calculateTime(minute) {
+    let hour = Math.floor(minute / 60);
+    let min = minute % 60;
 
     if(hour === 0) {
       return `${min}мин`
@@ -32,9 +32,9 @@ function MoviesCard({ movie, onSave, onDelete, isChecked }) {
       duration: movie.duration ? movie.duration : 0,
       year: movie.year ? movie.year : 0,
       description: movie.description ? movie.description : 'Неизвестно',
-      image: serverLink + movie.image.url,
-      trailerLink: movie.trailerLink,
-      thumbnail: movie.thumbnail ? movie.thumbnail : 'https://pbs.twimg.com/media/EYkX9U2XQAUu3-X.jpg:large',
+      image: serverLink + movie.image.url ? serverLink + movie.image.url : 'https://unknown.com/result',
+      trailerLink: movie.trailerLink ? movie.trailerLink : 'https://unknown.com/result',
+      thumbnail: movie.thumbnail ? movie.thumbnail : 'https://unknown.com/result',
       movieId: movie.id,
       nameRU: movie.nameRU ? movie.nameRU : 'Неизвестно',
       nameEN: movie.nameEN ? movie.nameEN : 'Неизвестно',
@@ -54,7 +54,7 @@ function MoviesCard({ movie, onSave, onDelete, isChecked }) {
       <a href={movie.trailerLink} target='_blank'><img className="card__image" src={location.pathname === '/movies' ? serverLink + movie.image.url : movie.image} alt={movie.nameRU} /></a>
       <div className="card__body">
         <h3 className="card__title">{movie.nameRU}</h3>
-        <p className="card__duration">{calculateTime}</p>
+        <p className="card__duration">{calculateTime(movie.duration)}</p>
         {location.pathname === "/movies" ? (
           <input
             type="checkbox"

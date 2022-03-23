@@ -26,7 +26,6 @@ import { errorText, successTextProfile,  errorTextConflict, errorLogin} from '..
 
 function App() {
   const [isMenuHidden, setIsMenuHidden] = useState(true);
-  // production true
   const [loggedIn, setLoggedIn] = useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [tooltipSuccess, setTooltipSuccess] = useState(false);
@@ -35,10 +34,8 @@ function App() {
 
   const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
-
+  const [searchValue, getSearchValue] = useState('');
   const [shortMovies, setShortMovies] = useState(false);
-  const [foundMovies, setFoundMovies] = useState([]);
-  const [unfilteredMovies, setUnfilteredMovies] = useState([]);
 
   const [currentUser, setCurrentUser] = useState({
     _id: '',
@@ -75,27 +72,31 @@ function App() {
     }
   }
 
-  function handleSearchMovies(search, movies) {
-    console.log(movies)
-    let moviesList = movies.filter((item) => item.nameRU.toLowerCase().includes(search.toLowerCase()));
-    setUnfilteredMovies(moviesList);
+  function handleGetSearchValue(value) {
+    getSearchValue(value);
+  }
+
+  function handleCleanSearchValue() {
+    getSearchValue('');
+  }
+
+  const handleSearchMovies = (movies) => {
+    let moviesList = movies.filter((item) => item.nameRU.toLowerCase().includes(searchValue.toLowerCase()));
 
     if(shortMovies) {
       let shortMoviesList = moviesList.filter((item) => item.duration <= 40);
-      return setFoundMovies(shortMoviesList);
+      return shortMoviesList;
     }
 
-    setFoundMovies(moviesList);
+
+    return moviesList;
   }
 
   function handleCheckShortMovies(evt) {
     if(evt.target.checked) {
-      let shortMoviesList = foundMovies.filter((item) => item.duration <= 40);
       setShortMovies(true);
-      setFoundMovies(shortMoviesList);
     } else {
       setShortMovies(false);
-      setFoundMovies(unfilteredMovies);
     }
   }
 
@@ -255,19 +256,19 @@ function App() {
         <Route exact path='/' element={<Main />} />
         <Route path='/movies' element={
           <ProtectedRoute loggedIn={loggedIn}>
-            <Movies>
-              <SearchForm movies={movies} handleSearchMovies={handleSearchMovies} handleCheckShortMovies={handleCheckShortMovies} />
+            <Movies handleCleanSearchValue={handleCleanSearchValue}>
+              <SearchForm handleGetSearchValue={handleGetSearchValue} handleCheckShortMovies={handleCheckShortMovies} />
               <Preloader />
-              <MoviesCardList handleCheckSaveMovie={handleCheckSaveMovie} movies={foundMovies} handleSaveMovie={handleSaveMovie} handleDeleteMovie={handleDeleteMovie} />
+              <MoviesCardList searchValue={searchValue} isShortMovies={shortMovies} handleSearchMovies={handleSearchMovies} handleCheckSaveMovie={handleCheckSaveMovie} movies={movies} handleSaveMovie={handleSaveMovie} handleDeleteMovie={handleDeleteMovie} />
             </Movies>
           </ProtectedRoute>
         } />
         <Route path='/saved-movies' element={
           <ProtectedRoute loggedIn={loggedIn}>
-            <SavedMovies handleGetSavedMovies={handleGetSavedMovies}>
-              <SearchForm movies={savedMovies} handleSearchMovies={handleSearchMovies} handleCheckShortMovies={handleCheckShortMovies} />
+            <SavedMovies handleGetSavedMovies={handleGetSavedMovies} handleCleanSearchValue={handleCleanSearchValue}>
+              <SearchForm handleGetSearchValue={handleGetSearchValue} handleCheckShortMovies={handleCheckShortMovies} />
               <Preloader />
-              <MoviesCardList handleCheckSaveMovie={handleCheckSaveMovie} movies={savedMovies} handleSaveMovie={handleSaveMovie} handleDeleteMovie={handleDeleteMovie} />
+              <MoviesCardList searchValue={searchValue} isShortMovies={shortMovies} handleSearchMovies={handleSearchMovies} handleCheckSaveMovie={handleCheckSaveMovie} movies={savedMovies} handleSaveMovie={handleSaveMovie} handleDeleteMovie={handleDeleteMovie} />
             </SavedMovies>
           </ProtectedRoute>
         } />

@@ -4,7 +4,7 @@ import './SavedMovies.css';
 function SavedMovies({ handleGetSavedMovies, children }) {
   useEffect(() => {
     handleGetSavedMovies();
-  }, [])
+  }, []);
 
   return(
     <section className='saved-movies'>

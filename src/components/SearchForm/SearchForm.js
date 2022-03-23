@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import './SearchForm.css';
 
-function SearchForm({ handleSearchMovies, handleCheckShortMovies }) {
+function SearchForm({ movies, handleSearchMovies, handleCheckShortMovies }) {
   const [name, setName] = useState('');
   const [isValid, setIsValid] = useState(true);
 
@@ -18,7 +18,7 @@ function SearchForm({ handleSearchMovies, handleCheckShortMovies }) {
     }
 
     setIsValid(true);
-    handleSearchMovies(name);
+    handleSearchMovies(name, movies);
   }
 
   useEffect(() => {

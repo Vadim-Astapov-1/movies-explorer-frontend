@@ -31,12 +31,14 @@ function App() {
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [tooltipSuccess, setTooltipSuccess] = useState(false);
   const [tooltipType, setTooltipType] = useState('');
+  const [formError, setFormError] = useState('');
+
   const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
+
   const [shortMovies, setShortMovies] = useState(false);
   const [foundMovies, setFoundMovies] = useState([]);
   const [unfilteredMovies, setUnfilteredMovies] = useState([]);
-  const [formError, setFormError] = useState('');
 
   const [currentUser, setCurrentUser] = useState({
     _id: '',
@@ -73,7 +75,8 @@ function App() {
     }
   }
 
-  function handleSearchMovies(search) {
+  function handleSearchMovies(search, movies) {
+    console.log(movies)
     let moviesList = movies.filter((item) => item.nameRU.toLowerCase().includes(search.toLowerCase()));
     setUnfilteredMovies(moviesList);
 
@@ -123,11 +126,9 @@ function App() {
   }
 
   function handleSaveMovie(movie) {
-    console.log(movie)
     mainApi.saveMovie(movie)
       .then((newMovie) => {
-        setSavedMovies(savedMovies.map((item) => item._id === movie.id ? newMovie : item));
-        console.log(savedMovies);
+        setSavedMovies(savedMovies.map((item) => item.movieId === movie.movieId ? newMovie : item));
       })
       .catch((err) => {
         console.log(err);
@@ -137,10 +138,10 @@ function App() {
       });
   }
 
-  function handleDeleteMovie(id, movie) {
+  function handleDeleteMovie(id) {
     mainApi.deleteMovie(id)
       .then(() => {
-        setSavedMovies(savedMovies.filter((item) => item._id !== movie.id));
+        setSavedMovies(savedMovies.filter((item) => item.movieId !== id));
       })
       .catch((err) => {
         console.log(err);
@@ -148,6 +149,10 @@ function App() {
         setTooltipType(errorText);
         setIsInfoTooltipOpen(true);
       });
+  }
+
+  function handleCheckSaveMovie(item) {
+    return savedMovies.some((someItem) => someItem.movieId === item.id);
   }
 
   function handleUpdateProfile(name, email) {
@@ -187,6 +192,7 @@ function App() {
   function handleLoggin(email, password) {
     mainApi.authorize(email, password)
       .then((res) => {
+        console.log(res)
         setCurrentUser(res.user);
         setLoggedIn(true);
         navigate('/movies');
@@ -250,18 +256,18 @@ function App() {
         <Route path='/movies' element={
           <ProtectedRoute loggedIn={loggedIn}>
             <Movies>
-              <SearchForm handleSearchMovies={handleSearchMovies} handleCheckShortMovies={handleCheckShortMovies} />
+              <SearchForm movies={movies} handleSearchMovies={handleSearchMovies} handleCheckShortMovies={handleCheckShortMovies} />
               <Preloader />
-              <MoviesCardList movies={foundMovies} handleSaveMovie={handleSaveMovie} handleDeleteMovie={handleDeleteMovie} />
+              <MoviesCardList handleCheckSaveMovie={handleCheckSaveMovie} movies={foundMovies} handleSaveMovie={handleSaveMovie} handleDeleteMovie={handleDeleteMovie} />
             </Movies>
           </ProtectedRoute>
         } />
         <Route path='/saved-movies' element={
           <ProtectedRoute loggedIn={loggedIn}>
             <SavedMovies handleGetSavedMovies={handleGetSavedMovies}>
-              <SearchForm />
+              <SearchForm movies={savedMovies} handleSearchMovies={handleSearchMovies} handleCheckShortMovies={handleCheckShortMovies} />
               <Preloader />
-              <MoviesCardList movies={foundMovies} />
+              <MoviesCardList handleCheckSaveMovie={handleCheckSaveMovie} movies={savedMovies} handleSaveMovie={handleSaveMovie} handleDeleteMovie={handleDeleteMovie} />
             </SavedMovies>
           </ProtectedRoute>
         } />

@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import './SavedMovies.css';
 
-function SavedMovies({ handleCleanSearchValue, handleGetSavedMovies, children }) {
+function SavedMovies({ handleGetSavedMovies, children }) {
   useEffect(() => {
     handleGetSavedMovies();
-    handleCleanSearchValue();
   }, []);
 
   return(

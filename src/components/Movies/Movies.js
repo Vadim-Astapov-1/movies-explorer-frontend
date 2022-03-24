@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import './Movies.css';
 
-function Movies({ handleCleanSearchValue, children }) {
+function Movies({ handleLoadLocalMovies, children }) {
   useEffect(() => {
-    handleCleanSearchValue();
-  }, [])
+    handleLoadLocalMovies();
+  }, []);
 
   return(
     <section className='movies'>

@@ -41,7 +41,7 @@
 
 /* display: flex */
 .preloader {
-    display: none;
+    display: flex;
     align-items: center;
     justify-content: center;
     /* fix: width on max-width */

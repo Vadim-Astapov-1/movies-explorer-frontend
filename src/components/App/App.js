@@ -16,7 +16,6 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import Preloader from '../Preloader/Preloader';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import { CurrentUserContext } from '../../context/CurrentUserContext';
@@ -34,8 +33,9 @@ function App() {
 
   const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
-  const [searchValue, getSearchValue] = useState('');
-  const [isShortMovies, setIsShortMovies] = useState(false);
+  const [foundMovies, setFoundMovies] = useState([]);
+  const [notFound, setNotFound] = useState(false);
+  const [isActivePreloader, setIsActivePreloader] = useState(false);
 
   const [currentUser, setCurrentUser] = useState({
     _id: '',
@@ -72,31 +72,34 @@ function App() {
     }
   }
 
-  function handleGetSearchValue(value) {
-    getSearchValue(value);
-  }
+  const handleFliterMovies = (value, isShort, movies) => {
+    setNotFound(false);
 
-  function handleCleanSearchValue() {
-    getSearchValue('');
-  }
+    if(location.pathname === '/movies') {
+      const text = localStorage.getItem('searchText');
 
-  const handleFliterMovies = (movies) => {
-    let moviesList = movies.filter((item) => item.nameRU.toLowerCase().includes(searchValue.toLowerCase()));
+      if(!text) {
+        return setFoundMovies([]);
+      }
+    }
 
-    if(isShortMovies) {
+    let moviesList = movies.filter((item) => item.nameRU.toLowerCase().includes(value.toLowerCase()));
+
+    if(moviesList.length === 0) {
+      return setNotFound(true);
+    }
+
+    if(isShort) {
       let shortMoviesList = moviesList.filter((item) => item.duration <= 40);
-      return shortMoviesList;
+
+      if(shortMoviesList.length === 0) {
+        return setNotFound(true);
+      }
+
+      return setFoundMovies(shortMoviesList);
     }
 
-    return moviesList;
-  }
-
-  function handleCheckShortMovies(evt) {
-    if(evt.target.checked) {
-      setIsShortMovies(true);
-    } else {
-      setIsShortMovies(false);
-    }
+    return setFoundMovies(moviesList);
   }
 
   function handleGetSavedMovies() {
@@ -113,16 +116,30 @@ function App() {
   }
 
   function handleGetMovies() {
+    setIsActivePreloader(true);
+
     moviesApi.getMovies()
       .then((movies) => {
         setMovies(movies);
+        localStorage.setItem('movies', JSON.stringify(movies));
       })
       .catch((err) => {
         console.log(err);
         setTooltipSuccess(false);
         setTooltipType(errorText);
         setIsInfoTooltipOpen(true);
-      });
+      })
+      .finally(() => {
+        setIsActivePreloader(false);
+      })
+  }
+
+  function handleLoadLocalMovies() {
+    const movies = JSON.parse(localStorage.getItem('movies'));
+
+    if(movies) {
+      setMovies(movies);
+    }
   }
 
   function handleSaveMovie(movie) {
@@ -232,7 +249,6 @@ function App() {
   useEffect(() => {
     setIsMenuHidden(true);
     setFormError('');
-    setIsShortMovies(false);
   }, [location.pathname]);
 
   useEffect(() => {
@@ -241,7 +257,6 @@ function App() {
 
   useEffect(() => {
     if(loggedIn) {
-      handleGetMovies();
       handleGetSavedMovies();
     }
   }, [loggedIn]);
@@ -256,19 +271,17 @@ function App() {
         <Route exact path='/' element={<Main />} />
         <Route path='/movies' element={
           <ProtectedRoute loggedIn={loggedIn}>
-            <Movies handleCleanSearchValue={handleCleanSearchValue}>
-              <SearchForm isShortMovies={isShortMovies} handleGetSearchValue={handleGetSearchValue} handleCheckShortMovies={handleCheckShortMovies} />
-              <Preloader />
-              <MoviesCardList searchValue={searchValue} isShortMovies={isShortMovies} handleFliterMovies={handleFliterMovies} handleCheckSaveMovie={handleCheckSaveMovie} movies={movies} handleSaveMovie={handleSaveMovie} handleDeleteMovie={handleDeleteMovie} />
+            <Movies handleLoadLocalMovies={handleLoadLocalMovies}>
+              <SearchForm handleGetMovies={handleGetMovies} movies={movies} handleFliterMovies={handleFliterMovies} />
+              <MoviesCardList isActivePreloader={isActivePreloader} foundMovies={foundMovies} notFound={notFound} handleCheckSaveMovie={handleCheckSaveMovie} handleSaveMovie={handleSaveMovie} handleDeleteMovie={handleDeleteMovie} />
             </Movies>
           </ProtectedRoute>
         } />
         <Route path='/saved-movies' element={
           <ProtectedRoute loggedIn={loggedIn}>
-            <SavedMovies handleGetSavedMovies={handleGetSavedMovies} handleCleanSearchValue={handleCleanSearchValue}>
-              <SearchForm isShortMovies={isShortMovies} handleGetSearchValue={handleGetSearchValue} handleCheckShortMovies={handleCheckShortMovies} />
-              <Preloader />
-              <MoviesCardList searchValue={searchValue} isShortMovies={isShortMovies} handleFliterMovies={handleFliterMovies} handleCheckSaveMovie={handleCheckSaveMovie} movies={savedMovies} handleSaveMovie={handleSaveMovie} handleDeleteMovie={handleDeleteMovie} />
+            <SavedMovies handleGetSavedMovies={handleGetSavedMovies}>
+              <SearchForm movies={savedMovies} handleFliterMovies={handleFliterMovies}/>
+              <MoviesCardList isActivePreloader={isActivePreloader} foundMovies={foundMovies} notFound={notFound} handleCheckSaveMovie={handleCheckSaveMovie} handleSaveMovie={handleSaveMovie} handleDeleteMovie={handleDeleteMovie} />
             </SavedMovies>
           </ProtectedRoute>
         } />

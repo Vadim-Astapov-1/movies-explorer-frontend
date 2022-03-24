@@ -3,13 +3,13 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import './MoviesCardList.css';
 import { useLocation } from 'react-router-dom';
 
-function MoviesCardList({ searchValue, isShortMovies, handleSearchMovies, handleCheckSaveMovie, movies, handleSaveMovie, handleDeleteMovie }) {
+function MoviesCardList({ searchValue, isShortMovies, handleFliterMovies, handleCheckSaveMovie, movies, handleSaveMovie, handleDeleteMovie }) {
   const [moviesList, setMoviesList] = useState([]);
   const [notFound, setNotFound] = useState(false);
   const location = useLocation();
 
-  useEffect(() => {
-    let list = handleSearchMovies(movies);
+  function getMovies() {
+    let list = handleFliterMovies(movies);
     setNotFound(false);
 
     if(location.pathname === '/movies' && searchValue === '') {
@@ -20,7 +20,11 @@ function MoviesCardList({ searchValue, isShortMovies, handleSearchMovies, handle
       return setNotFound(true);
     }
 
-    setMoviesList(handleSearchMovies(movies))
+    setMoviesList(list)
+  }
+
+  useEffect(() => {
+    getMovies();
   }, [isShortMovies, searchValue, movies, location.pathname]);
 
   useEffect(() => {

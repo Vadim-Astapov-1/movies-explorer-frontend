@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import './SearchForm.css';
 
-function SearchForm({ handleGetSearchValue, handleCheckShortMovies }) {
+function SearchForm({ isShortMovies, handleGetSearchValue, handleCheckShortMovies }) {
   const [name, setName] = useState('');
   const [isValid, setIsValid] = useState(true);
 
@@ -28,11 +28,11 @@ function SearchForm({ handleGetSearchValue, handleCheckShortMovies }) {
   return(
     <div className='search'>
       <form className='seacrh__form' onSubmit={handleSubmit} noValidate>
-        <input type='text' onChange={handleChange} className='search__input' name='movies' placeholder='Фильм' id='search-input' required></input>
+        <input type='text' value={name} onChange={handleChange} className='search__input' name='movies' placeholder='Фильм' id='search-input' required></input>
         <button type='submit' className='search__submit-btn'>Поиск</button>
       </form>
       <span className='search__input-error' id='search-input-error'>{!isValid ? 'Нужно ввести ключевое слово' : ''}</span>
-      <FilterCheckbox onCheck={handleCheckShortMovies} />
+      <FilterCheckbox check={isShortMovies} onCheck={handleCheckShortMovies} />
     </div>
   );
 }

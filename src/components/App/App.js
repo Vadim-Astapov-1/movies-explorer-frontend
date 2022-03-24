@@ -35,7 +35,7 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
   const [searchValue, getSearchValue] = useState('');
-  const [shortMovies, setShortMovies] = useState(false);
+  const [isShortMovies, setIsShortMovies] = useState(false);
 
   const [currentUser, setCurrentUser] = useState({
     _id: '',
@@ -80,10 +80,10 @@ function App() {
     getSearchValue('');
   }
 
-  const handleSearchMovies = (movies) => {
+  const handleFliterMovies = (movies) => {
     let moviesList = movies.filter((item) => item.nameRU.toLowerCase().includes(searchValue.toLowerCase()));
 
-    if(shortMovies) {
+    if(isShortMovies) {
       let shortMoviesList = moviesList.filter((item) => item.duration <= 40);
       return shortMoviesList;
     }
@@ -93,9 +93,9 @@ function App() {
 
   function handleCheckShortMovies(evt) {
     if(evt.target.checked) {
-      setShortMovies(true);
+      setIsShortMovies(true);
     } else {
-      setShortMovies(false);
+      setIsShortMovies(false);
     }
   }
 
@@ -128,7 +128,7 @@ function App() {
   function handleSaveMovie(movie) {
     mainApi.saveMovie(movie)
       .then((newMovie) => {
-        setSavedMovies(savedMovies.map((item) => item.movieId !== movie.movieId ? newMovie : item));
+        setSavedMovies([...savedMovies, newMovie]);
       })
       .catch((err) => {
         console.log(err);
@@ -232,6 +232,7 @@ function App() {
   useEffect(() => {
     setIsMenuHidden(true);
     setFormError('');
+    setIsShortMovies(false);
   }, [location.pathname]);
 
   useEffect(() => {
@@ -256,18 +257,18 @@ function App() {
         <Route path='/movies' element={
           <ProtectedRoute loggedIn={loggedIn}>
             <Movies handleCleanSearchValue={handleCleanSearchValue}>
-              <SearchForm handleGetSearchValue={handleGetSearchValue} handleCheckShortMovies={handleCheckShortMovies} />
+              <SearchForm isShortMovies={isShortMovies} handleGetSearchValue={handleGetSearchValue} handleCheckShortMovies={handleCheckShortMovies} />
               <Preloader />
-              <MoviesCardList searchValue={searchValue} isShortMovies={shortMovies} handleSearchMovies={handleSearchMovies} handleCheckSaveMovie={handleCheckSaveMovie} movies={movies} handleSaveMovie={handleSaveMovie} handleDeleteMovie={handleDeleteMovie} />
+              <MoviesCardList searchValue={searchValue} isShortMovies={isShortMovies} handleFliterMovies={handleFliterMovies} handleCheckSaveMovie={handleCheckSaveMovie} movies={movies} handleSaveMovie={handleSaveMovie} handleDeleteMovie={handleDeleteMovie} />
             </Movies>
           </ProtectedRoute>
         } />
         <Route path='/saved-movies' element={
           <ProtectedRoute loggedIn={loggedIn}>
             <SavedMovies handleGetSavedMovies={handleGetSavedMovies} handleCleanSearchValue={handleCleanSearchValue}>
-              <SearchForm handleGetSearchValue={handleGetSearchValue} handleCheckShortMovies={handleCheckShortMovies} />
+              <SearchForm isShortMovies={isShortMovies} handleGetSearchValue={handleGetSearchValue} handleCheckShortMovies={handleCheckShortMovies} />
               <Preloader />
-              <MoviesCardList searchValue={searchValue} isShortMovies={shortMovies} handleSearchMovies={handleSearchMovies} handleCheckSaveMovie={handleCheckSaveMovie} movies={savedMovies} handleSaveMovie={handleSaveMovie} handleDeleteMovie={handleDeleteMovie} />
+              <MoviesCardList searchValue={searchValue} isShortMovies={isShortMovies} handleFliterMovies={handleFliterMovies} handleCheckSaveMovie={handleCheckSaveMovie} movies={savedMovies} handleSaveMovie={handleSaveMovie} handleDeleteMovie={handleDeleteMovie} />
             </SavedMovies>
           </ProtectedRoute>
         } />

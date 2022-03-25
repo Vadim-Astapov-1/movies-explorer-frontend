@@ -36,6 +36,7 @@ function SearchForm({ handleGetMovies, movies, handleFliterMovies}) {
 
     if(location.pathname === '/movies') {
       localStorage.setItem('searchText', searchValue);
+      // Пойдет запрос и данные в state переменной обновляться
       handleGetMovies();
     }
 

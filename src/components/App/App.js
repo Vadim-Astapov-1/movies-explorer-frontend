@@ -36,6 +36,7 @@ function App() {
   const [foundMovies, setFoundMovies] = useState([]);
   const [notFound, setNotFound] = useState(false);
   const [isActivePreloader, setIsActivePreloader] = useState(false);
+  const [countMovies, setCountMovies] = useState(0);
 
   const [currentUser, setCurrentUser] = useState({
     _id: '',
@@ -69,6 +70,38 @@ function App() {
       setIsMenuHidden(false);
     } else {
       setIsMenuHidden(true);
+    }
+  }
+
+  function handleStartCountMovies() {
+    let width = window.innerWidth;
+
+    if(width > 768) {
+      setCountMovies(12);
+    }
+
+    if(width <= 768) {
+      setCountMovies(8);
+    }
+
+    if(width <= 480) {
+      setCountMovies(5);
+    }
+  }
+
+  function handleCountMovies() {
+    let width = window.innerWidth;
+
+    if(width > 768) {
+      setCountMovies(countMovies + 4);
+    }
+
+    if(width <= 768) {
+      setCountMovies(countMovies + 2);
+    }
+
+    if(width <= 480) {
+      setCountMovies(countMovies + 5);
     }
   }
 
@@ -256,6 +289,10 @@ function App() {
   }, []);
 
   useEffect(() => {
+    handleStartCountMovies();
+  }, [foundMovies])
+
+  useEffect(() => {
     if(loggedIn) {
       handleGetSavedMovies();
     }
@@ -273,7 +310,7 @@ function App() {
           <ProtectedRoute loggedIn={loggedIn}>
             <Movies handleLoadLocalMovies={handleLoadLocalMovies}>
               <SearchForm handleGetMovies={handleGetMovies} movies={movies} handleFliterMovies={handleFliterMovies} />
-              <MoviesCardList isActivePreloader={isActivePreloader} foundMovies={foundMovies} notFound={notFound} handleCheckSaveMovie={handleCheckSaveMovie} handleSaveMovie={handleSaveMovie} handleDeleteMovie={handleDeleteMovie} />
+              <MoviesCardList countMovies={countMovies} handleCountMovies={handleCountMovies} isActivePreloader={isActivePreloader} foundMovies={foundMovies} notFound={notFound} handleCheckSaveMovie={handleCheckSaveMovie} handleSaveMovie={handleSaveMovie} handleDeleteMovie={handleDeleteMovie} />
             </Movies>
           </ProtectedRoute>
         } />
@@ -281,7 +318,7 @@ function App() {
           <ProtectedRoute loggedIn={loggedIn}>
             <SavedMovies handleGetSavedMovies={handleGetSavedMovies}>
               <SearchForm movies={savedMovies} handleFliterMovies={handleFliterMovies}/>
-              <MoviesCardList isActivePreloader={isActivePreloader} foundMovies={foundMovies} notFound={notFound} handleCheckSaveMovie={handleCheckSaveMovie} handleSaveMovie={handleSaveMovie} handleDeleteMovie={handleDeleteMovie} />
+              <MoviesCardList countMovies={countMovies} handleCountMovies={handleCountMovies} isActivePreloader={isActivePreloader} foundMovies={foundMovies} notFound={notFound} handleCheckSaveMovie={handleCheckSaveMovie} handleSaveMovie={handleSaveMovie} handleDeleteMovie={handleDeleteMovie} />
             </SavedMovies>
           </ProtectedRoute>
         } />
@@ -302,4 +339,3 @@ function App() {
 
 
 export default App;
-

@@ -2,11 +2,8 @@ import React from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import Preloader from '../Preloader/Preloader';
 import './MoviesCardList.css';
-import { useLocation } from 'react-router-dom';
 
-function MoviesCardList({ isActivePreloader, notFound, foundMovies, handleCheckSaveMovie, handleSaveMovie, handleDeleteMovie }) {
-  const location = useLocation();
-
+function MoviesCardList({ countMovies, handleCountMovies, isActivePreloader, notFound, foundMovies, handleCheckSaveMovie, handleSaveMovie, handleDeleteMovie }) {
   function makeResult() {
     if(isActivePreloader) {
       return <Preloader />;
@@ -16,7 +13,7 @@ function MoviesCardList({ isActivePreloader, notFound, foundMovies, handleCheckS
       return <p className='movies-cards__subtitle'>Ничего не найдено</p>;
     }
 
-    return foundMovies.map((item) => <MoviesCard key={item.id} movie={item} onSave={handleSaveMovie} onDelete={handleDeleteMovie} isChecked={handleCheckSaveMovie(item)} />);
+    return foundMovies.slice(0, countMovies).map((item) => <MoviesCard key={item.id} movie={item} onSave={handleSaveMovie} onDelete={handleDeleteMovie} isChecked={handleCheckSaveMovie(item)} />);
   }
 
   return(
@@ -25,7 +22,7 @@ function MoviesCardList({ isActivePreloader, notFound, foundMovies, handleCheckS
         {makeResult()}
       </div>
       <div className='movies-cards__btn-zone'>
-        <button className={`movies-cards__btn ${location.pathname === '/saved-movies' ? 'movies-cards__btn_type_none' : ''}`}>Ещё</button>
+        <button className={`movies-cards__btn ${foundMovies.length <= countMovies ? 'movies-cards__btn_type_none' : ''}`} onClick={handleCountMovies}>Ещё</button>
       </div>
     </div>
   );

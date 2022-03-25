@@ -270,6 +270,9 @@ function App() {
       .then(() => {
         setLoggedIn(false);
         navigate('/');
+        localStorage.removeItem('movies');
+        localStorage.removeItem('searchText');
+        localStorage.removeItem('isShortMovies');
       })
       .catch((err) => {
         console.log(err);

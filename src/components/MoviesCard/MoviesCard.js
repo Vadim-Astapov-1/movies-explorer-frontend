@@ -50,20 +50,20 @@ function MoviesCard({ movie, onSave, onDelete, isChecked }) {
   }
 
   return (
-    <article className="card">
-      <a href={movie.trailerLink} target='_blank'><img className="card__image" src={location.pathname === '/movies' ? serverLink + movie.image.url : movie.image} alt={movie.nameRU} /></a>
-      <div className="card__body">
-        <h3 className="card__title">{movie.nameRU}</h3>
-        <p className="card__duration">{calculateTime(movie.duration)}</p>
-        {location.pathname === "/movies" ? (
+    <article className='card'>
+      <a href={movie.trailerLink} target='_blank'><img className='card__image' src={location.pathname === '/movies' ? serverLink + movie.image.url : movie.image} alt={movie.nameRU} /></a>
+      <div className='card__body'>
+        <h3 className='card__title'>{movie.nameRU}</h3>
+        <p className='card__duration'>{calculateTime(movie.duration)}</p>
+        {location.pathname === '/movies' ? (
           <input
-            type="checkbox"
-            className="card__checkbox"
+            type='checkbox'
+            className='card__checkbox'
             onChange={handleChange}
             defaultChecked={isChecked && true}
           ></input>
         ) : (
-          <button className="card__btn" onClick={deleteMovie}></button>
+          <button className='card__btn' onClick={deleteMovie}></button>
         )}
       </div>
     </article>

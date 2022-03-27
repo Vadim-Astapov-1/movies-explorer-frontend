@@ -242,7 +242,6 @@ function App() {
   function handleLoggin(email, password) {
     mainApi.authorize(email, password)
       .then((res) => {
-        console.log(res)
         setCurrentUser(res.user);
         setLoggedIn(true);
         navigate('/movies');

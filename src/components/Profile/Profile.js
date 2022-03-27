@@ -8,7 +8,7 @@ function Profile({ onEdit, onLogout }) {
   const currentUser = useContext(CurrentUserContext);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  let validation = Validation();
+  let validation = Validation(currentUser);
 
   function handleChangeProfile(evt) {
     validation.handleChange(evt);

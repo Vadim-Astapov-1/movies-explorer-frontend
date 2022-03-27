@@ -3,10 +3,10 @@ import FormAuth from '../FormAuth/FormAuth';
 import { Validation } from '../Validation/Validation';
 
 function Register({ onRegister, reqError }) {
-  let validation = Validation();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  let validation = Validation({ name: '', email: '', password: '' });
 
   function handleChangeRegister(evt) {
     validation.handleChange(evt);

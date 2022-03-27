@@ -3,9 +3,9 @@ import FormAuth from '../FormAuth/FormAuth';
 import { Validation } from '../Validation/Validation';
 
 function Login({ onLogin, reqError }) {
-  let validation = Validation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  let validation = Validation({ email: '', password: '' });
 
 
   function handleChangeLogin(evt) {

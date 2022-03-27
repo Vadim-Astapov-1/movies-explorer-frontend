@@ -298,7 +298,7 @@ function App() {
       handleGetSavedMovies();
 
       if(location.pathname === '/signin' || location.pathname === '/signup') {
-        navigate('/');
+        navigate('/movies');
       }
     }
   }, [loggedIn]);

@@ -47,7 +47,7 @@ function Profile({ onEdit, onLogout }) {
       <span className='form-profile__input-error' id='profile-name-input-error'>{validation.errors.email}</span>
       <button type='submit' className='form-profile__submit-btn' disabled={!validation.isValid && true}>Редактировать</button>
       </form>
-      <Link to='/signin' className='profile__link' onClick={onLogout}>Выйти из аккаунта</Link>
+      <Link to='/' className='profile__link' onClick={onLogout}>Выйти из аккаунта</Link>
     </section>
   );
 }

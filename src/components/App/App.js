@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
 
 import Header from '../Header/Header';
@@ -296,10 +296,6 @@ function App() {
   useEffect(() => {
     if(loggedIn) {
       handleGetSavedMovies();
-
-      if(location.pathname === '/signin' || location.pathname === '/signup') {
-        navigate('/movies');
-      }
     }
   }, [loggedIn]);
 
@@ -308,8 +304,8 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
       <Header><Navigation loggedIn={loggedIn} handleBtnNavClick={handleBtnNavClick} /></Header>
       <Routes>
-        <Route path='/signup' element={<Register onRegister={handleRegister} reqError={formError} />} />
-        <Route path='/signin' element={<Login onLogin={handleLoggin} reqError={formError} />} />
+        <Route path='/signup' element={loggedIn ? <Navigate to='/'/> : <Register onRegister={handleRegister} reqError={formError} />} />
+        <Route path='/signin' element={loggedIn ? <Navigate to='/'/> : <Login onLogin={handleLoggin} reqError={formError} />} />
         <Route exact path='/' element={<Main />} />
         <Route path='/movies' element={
           <ProtectedRoute loggedIn={loggedIn}>

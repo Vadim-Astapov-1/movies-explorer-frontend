@@ -257,7 +257,6 @@ function App() {
       .then((res) => {
         setLoggedIn(true);
         setCurrentUser(res);
-        navigate('/movies');
       })
       .catch(() => {
         setLoggedIn(false);
@@ -297,6 +296,10 @@ function App() {
   useEffect(() => {
     if(loggedIn) {
       handleGetSavedMovies();
+
+      if(location.pathname === '/signin' || location.pathname === '/signup') {
+        navigate('/');
+      }
     }
   }, [loggedIn]);
 

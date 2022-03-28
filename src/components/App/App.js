@@ -25,7 +25,7 @@ import { errorText, successTextProfile,  errorTextConflict, errorLogin} from '..
 
 function App() {
   const [isMenuHidden, setIsMenuHidden] = useState(true);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(undefined);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [tooltipSuccess, setTooltipSuccess] = useState(false);
   const [tooltipType, setTooltipType] = useState('');
@@ -136,7 +136,8 @@ function App() {
   }
 
   function handleGetSavedMovies() {
-    mainApi.getSavedMovies()
+    if(loggedIn) {
+      mainApi.getSavedMovies()
       .then((movies) => {
         setSavedMovies(movies);
       })
@@ -146,6 +147,7 @@ function App() {
         setTooltipType(errorText);
         setIsInfoTooltipOpen(true);
       })
+    }
   }
 
   function handleGetMovies() {
@@ -304,8 +306,8 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
       <Header><Navigation loggedIn={loggedIn} handleBtnNavClick={handleBtnNavClick} /></Header>
       <Routes>
-        <Route path='/signup' element={loggedIn ? <Navigate to='/movies'/> : <Register onRegister={handleRegister} reqError={formError} />} />
-        <Route path='/signin' element={loggedIn ? <Navigate to='/movies'/> : <Login onLogin={handleLoggin} reqError={formError} />} />
+        <Route path='/signup' element={loggedIn === true ? <Navigate to='/movies'/> : <Register onRegister={handleRegister} reqError={formError} />} />
+        <Route path='/signin' element={loggedIn === true ? <Navigate to='/movies'/> : <Login onLogin={handleLoggin} reqError={formError} />} />
         <Route exact path='/' element={<Main />} />
         <Route path='/movies' element={
           <ProtectedRoute loggedIn={loggedIn}>

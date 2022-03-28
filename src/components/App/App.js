@@ -304,8 +304,8 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
       <Header><Navigation loggedIn={loggedIn} handleBtnNavClick={handleBtnNavClick} /></Header>
       <Routes>
-        <Route path='/signup' element={loggedIn ? <Navigate to='/'/> : <Register onRegister={handleRegister} reqError={formError} />} />
-        <Route path='/signin' element={loggedIn ? <Navigate to='/'/> : <Login onLogin={handleLoggin} reqError={formError} />} />
+        <Route path='/signup' element={loggedIn ? <Navigate to='/movies'/> : <Register onRegister={handleRegister} reqError={formError} />} />
+        <Route path='/signin' element={loggedIn ? <Navigate to='/movies'/> : <Login onLogin={handleLoggin} reqError={formError} />} />
         <Route exact path='/' element={<Main />} />
         <Route path='/movies' element={
           <ProtectedRoute loggedIn={loggedIn}>

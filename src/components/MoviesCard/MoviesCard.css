@@ -7,11 +7,13 @@
 }
 
 .card__image {
-  max-width: 100%;
+  width: 100%;
   height: 151px;
   object-fit: cover;
   object-position: center;
   border-radius: 10px 10px 0 0;
+  text-decoration: none;
+  display: flex;
 }
 
 .card__body {

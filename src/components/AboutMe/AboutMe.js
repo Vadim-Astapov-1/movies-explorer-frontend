@@ -1,21 +1,19 @@
 import React from 'react';
 import './AboutMe.css';
-import studentImg from '../../images/student.png';
+import studentImg from '../../images/mein-foto.jpg';
 import Portfolio from '../Portfolio/Portfolio';
 
 function AboutMe() {
-
   return(
     <section className='about-me'>
       <h2 className='section-title about-me__title'>Студент</h2>
       <img src={studentImg} alt='Изображение студента' className='about-me__image'></img>
-      <p className='about-me__student'>Виталий</p>
-      <p className='about-me__status'>Фронтенд-разработчик, 30 лет</p>
+      <p className='about-me__student'>Вадим</p>
+      <p className='about-me__status'>Фронтенд-разработчик, 20 лет</p>
       <p className='about-me__description'>
-        Я родился и живу в Саратове, закончил факультет экономики СГУ. У меня есть жена
-        и дочь. Я люблю слушать музыку, а ещё увлекаюсь бегом. Недавно начал кодить.
-        С 2015 года работал в компании «СКБ Контур». После того, как прошёл курс по веб-разработке,
-        начал заниматься фриланс-заказами и ушёл с постоянной работы.
+        Живу в Москве, 5 лет учился за границей. Закончил курс Яндекс.практикум на специальность фронтенд-разработчика.
+        Люблю слушать музыку и читать книги. Обожаю верстку, потому что с ней чувствуешь себя частично художником, которому ещё многое предстоит написать.
+        Ведь мир разработки ограничивается лишь фантазией, так почему бы не внести в него немного своих красок.
       </p>
       <ul className='about-me__links'>
         <li><a href='https://www.facebook.com/profile.php?id=100021774372638' className='about-me__link' target='_blank'>Facebook</a></li>

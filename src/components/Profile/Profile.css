@@ -81,7 +81,7 @@
   transition: 0.4s;
 }
 
-.form-profile__submit-btn_type_inactive {
+.form-profile__submit-btn:disabled {
   pointer-events: none;
   user-select: none;
   opacity: 0.6;
@@ -101,13 +101,9 @@
   font-size: 10px;
   line-height: 12px;
   color: #ff3055;
-  opacity: 0;
+  opacity: 1;
   transition: 0.4s;
   text-align: right;
-}
-
-.form-auth__input-error_active {
-  opacity: 1;
 }
 
 .profile__link {

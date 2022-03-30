@@ -3,11 +3,14 @@
   margin: 0 auto;
   border-bottom: 1px solid rgba(170, 170, 170, 0.2);
   margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .seacrh__form {
+  width: 100%;
   max-width: 100%;
-  margin: 70px auto 26px;
+  margin: 70px auto 0;
   display: grid;
   grid-template-columns: 1fr 110px;
   border: 1.5px solid rgba(170, 170, 170, 0.2);
@@ -27,6 +30,15 @@
   color: #000000;
   border: 0;
   outline: none;
+}
+
+.search__input-error {
+  max-width: 100%;
+  color: #ff3055;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  margin: 13px 0;
 }
 
 .search__submit-btn {
@@ -65,9 +77,12 @@
     max-width: calc(100% - 28px);
   }
 
+  .search__input-error {
+    margin: 15px 0;
+  }
+
   .seacrh__form {
     grid-template-columns: 1fr 86px;
-    margin-bottom: 30px;
   }
 
   .search__input {

@@ -9,7 +9,7 @@ function Navigation({ loggedIn, handleBtnNavClick }) {
   // авторизированный пользователь видел ссылки на фильмы.
   return(
     <nav className='navigation'>
-    {location.pathname === '/' ? (
+    {!loggedIn ? (
       <>
       <Link to="/signup" className="navigation__link-landing">Регистрация</Link>
       <Link to="/signin" className="navigation__link-landing navigation__link-ladning_type_btn">Войти</Link>

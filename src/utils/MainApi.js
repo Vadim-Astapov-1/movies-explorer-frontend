@@ -90,7 +90,7 @@ class MainApi {
 }
 
 export const mainApi = new MainApi({
-  url: 'https://api.va-movies-explorer.nomoredomains.xyz',
+  url: 'https://api.va-movies-explorer.ru',
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json',

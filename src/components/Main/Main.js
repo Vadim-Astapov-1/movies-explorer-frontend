@@ -6,7 +6,7 @@ import Techs from '../Techs/Techs';
 import './Main.css';
 
 function Main() {
-  return(
+  return (
     <main className='content'>
       <Promo />
       <AboutProject />

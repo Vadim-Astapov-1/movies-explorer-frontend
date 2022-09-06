@@ -6,9 +6,14 @@ function FilterCheckbox({ check, onCheck }) {
     onCheck(evt);
   }
 
-  return(
+  return (
     <div className='filter'>
-      <input type='checkbox' onChange={handleChange} className='filter__checkbox' checked={check && true}></input>
+      <input
+        type='checkbox'
+        onChange={handleChange}
+        className='filter__checkbox'
+        checked={check && true}
+      ></input>
       <label className='filter__name'>Короткометражки</label>
     </div>
   );

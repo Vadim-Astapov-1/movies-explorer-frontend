@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import './SearchForm.css';
 
-function SearchForm({ handleGetMovies, movies, handleFliterMovies}) {
+function SearchForm({ handleGetMovies, movies, handleFliterMovies }) {
   const [searchValue, getSearchValue] = useState('');
   const [isShortMovies, setIsShortMovies] = useState(false);
   const [isValid, setIsValid] = useState(true);
@@ -14,13 +14,13 @@ function SearchForm({ handleGetMovies, movies, handleFliterMovies}) {
   }
 
   function handleCheckShortMovies(evt) {
-    if(evt.target.checked) {
+    if (evt.target.checked) {
       setIsShortMovies(true);
     } else {
       setIsShortMovies(false);
     }
 
-    if(location.pathname === '/movies') {
+    if (location.pathname === '/movies') {
       localStorage.setItem('isShortMovies', !isShortMovies);
     }
   }
@@ -28,48 +28,60 @@ function SearchForm({ handleGetMovies, movies, handleFliterMovies}) {
   function handleSubmit(evt) {
     evt.preventDefault();
 
-    if(searchValue === '') {
+    if (searchValue === '') {
       return setIsValid(false);
     }
 
     setIsValid(true);
 
-    if(location.pathname === '/movies') {
+    if (location.pathname === '/movies') {
       localStorage.setItem('searchText', searchValue);
 
       const movies = JSON.parse(localStorage.getItem('movies'));
-      if(!movies) {
+      if (!movies) {
         handleGetMovies();
       }
-
     }
 
     handleFliterMovies(searchValue, isShortMovies, movies);
   }
 
   useEffect(() => {
-    if(location.pathname === '/movies') {
+    if (location.pathname === '/movies') {
       const text = localStorage.getItem('searchText');
-      const checkStatus = JSON.parse(localStorage.getItem('isShortMovies'))
+      const checkStatus = JSON.parse(localStorage.getItem('isShortMovies'));
 
-      if(text) {
+      if (text) {
         getSearchValue(text);
         setIsShortMovies(checkStatus);
       }
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     handleFliterMovies(searchValue, isShortMovies, movies);
   }, [isShortMovies, movies]);
 
-  return(
+  return (
     <div className='search'>
       <form className='seacrh__form' onSubmit={handleSubmit} noValidate>
-        <input type='text' value={searchValue} onChange={handleChange} className='search__input' name='movies' placeholder='Фильм' id='search-input' required></input>
-        <button type='submit' className='search__submit-btn'>Поиск</button>
+        <input
+          type='text'
+          value={searchValue}
+          onChange={handleChange}
+          className='search__input'
+          name='movies'
+          placeholder='Фильм'
+          id='search-input'
+          required
+        ></input>
+        <button type='submit' className='search__submit-btn'>
+          Поиск
+        </button>
       </form>
-      <span className='search__input-error' id='search-input-error'>{!isValid ? 'Нужно ввести ключевое слово' : ''}</span>
+      <span className='search__input-error' id='search-input-error'>
+        {!isValid ? 'Нужно ввести ключевое слово' : ''}
+      </span>
       <FilterCheckbox check={isShortMovies} onCheck={handleCheckShortMovies} />
     </div>
   );

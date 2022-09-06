@@ -10,18 +10,18 @@ function MoviesCard({ movie, onSave, onDelete, isChecked }) {
     let hour = Math.floor(minute / 60);
     let min = minute % 60;
 
-    if(hour === 0) {
-      return `${min}мин`
+    if (hour === 0) {
+      return `${min}мин`;
     }
 
-    return `${hour}ч${min}мин`
+    return `${hour}ч${min}мин`;
   }
 
   function deleteMovie() {
-    if(location.pathname === '/movies') {
-      onDelete(movie.id)
+    if (location.pathname === '/movies') {
+      onDelete(movie.id);
     } else {
-      onDelete(movie.movieId)
+      onDelete(movie.movieId);
     }
   }
 
@@ -32,7 +32,8 @@ function MoviesCard({ movie, onSave, onDelete, isChecked }) {
       duration: movie.duration ? movie.duration : 0,
       year: movie.year ? movie.year : 0,
       description: movie.description ? movie.description : 'Неизвестно',
-      image: serverLink + movie.image.url ? serverLink + movie.image.url : 'https://unknown.com/result',
+      image:
+        serverLink + movie.image.url ? serverLink + movie.image.url : 'https://unknown.com/result',
       trailerLink: movie.trailerLink ? movie.trailerLink : 'https://unknown.com/result',
       thumbnail: movie.thumbnail ? movie.thumbnail : 'https://unknown.com/result',
       movieId: movie.id,
@@ -42,7 +43,7 @@ function MoviesCard({ movie, onSave, onDelete, isChecked }) {
   }
 
   function handleChange(evt) {
-    if(evt.target.checked) {
+    if (evt.target.checked) {
       saveMovie();
     } else {
       deleteMovie();
@@ -51,7 +52,13 @@ function MoviesCard({ movie, onSave, onDelete, isChecked }) {
 
   return (
     <article className='card'>
-      <a href={movie.trailerLink} target='_blank'><img className='card__image' src={location.pathname === '/movies' ? serverLink + movie.image.url : movie.image} alt={movie.nameRU} /></a>
+      <a href={movie.trailerLink} target='_blank'>
+        <img
+          className='card__image'
+          src={location.pathname === '/movies' ? serverLink + movie.image.url : movie.image}
+          alt={movie.nameRU}
+        />
+      </a>
       <div className='card__body'>
         <h3 className='card__title'>{movie.nameRU}</h3>
         <p className='card__duration'>{calculateTime(movie.duration)}</p>

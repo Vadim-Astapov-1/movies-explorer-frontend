@@ -6,11 +6,7 @@ function Movies({ handleLoadLocalMovies, children }) {
     handleLoadLocalMovies();
   }, []);
 
-  return(
-    <section className='movies'>
-      {children}
-    </section>
-  );
+  return <section className='movies'>{children}</section>;
 }
 
 export default Movies;

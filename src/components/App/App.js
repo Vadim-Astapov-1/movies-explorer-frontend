@@ -21,7 +21,7 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import { mainApi } from '../../utils/MainApi';
 import { moviesApi } from '../../utils/MoviesApi';
-import { errorText, successTextProfile,  errorTextConflict, errorLogin} from '../../utils/constans';
+import { errorText, successTextProfile, errorTextConflict, errorLogin } from '../../utils/constans';
 
 function App() {
   const [isMenuHidden, setIsMenuHidden] = useState(true);
@@ -66,7 +66,7 @@ function App() {
   }
 
   function handleBtnNavClick() {
-    if(isMenuHidden) {
+    if (isMenuHidden) {
       setIsMenuHidden(false);
     } else {
       setIsMenuHidden(true);
@@ -76,15 +76,15 @@ function App() {
   function handleStartCountMovies() {
     let width = window.innerWidth;
 
-    if(width > 768) {
+    if (width > 768) {
       setCountMovies(12);
     }
 
-    if(width <= 768) {
+    if (width <= 768) {
       setCountMovies(8);
     }
 
-    if(width <= 480) {
+    if (width <= 480) {
       setCountMovies(5);
     }
   }
@@ -92,15 +92,15 @@ function App() {
   function handleCountMovies() {
     let width = window.innerWidth;
 
-    if(width > 768) {
+    if (width > 768) {
       setCountMovies(countMovies + 4);
     }
 
-    if(width <= 768) {
+    if (width <= 768) {
       setCountMovies(countMovies + 2);
     }
 
-    if(width <= 480) {
+    if (width <= 480) {
       setCountMovies(countMovies + 5);
     }
   }
@@ -108,24 +108,26 @@ function App() {
   const handleFliterMovies = (value, isShort, movies) => {
     setNotFound(false);
 
-    if(location.pathname === '/movies') {
+    if (location.pathname === '/movies') {
       const text = localStorage.getItem('searchText');
 
-      if(!text) {
+      if (!text) {
         return setFoundMovies([]);
       }
     }
 
-    let moviesList = movies.filter((item) => item.nameRU.toLowerCase().includes(value.toLowerCase()));
+    let moviesList = movies.filter((item) =>
+      item.nameRU.toLowerCase().includes(value.toLowerCase())
+    );
 
-    if(moviesList.length === 0) {
+    if (moviesList.length === 0) {
       return setNotFound(true);
     }
 
-    if(isShort) {
+    if (isShort) {
       let shortMoviesList = moviesList.filter((item) => item.duration <= 40);
 
-      if(shortMoviesList.length === 0) {
+      if (shortMoviesList.length === 0) {
         return setNotFound(true);
       }
 
@@ -133,27 +135,29 @@ function App() {
     }
 
     return setFoundMovies(moviesList);
-  }
+  };
 
   function handleGetSavedMovies() {
-    if(loggedIn) {
-      mainApi.getSavedMovies()
-      .then((movies) => {
-        setSavedMovies(movies);
-      })
-      .catch((err) => {
-        console.log(err);
-        setTooltipSuccess(false);
-        setTooltipType(errorText);
-        setIsInfoTooltipOpen(true);
-      })
+    if (loggedIn) {
+      mainApi
+        .getSavedMovies()
+        .then((movies) => {
+          setSavedMovies(movies);
+        })
+        .catch((err) => {
+          console.log(err);
+          setTooltipSuccess(false);
+          setTooltipType(errorText);
+          setIsInfoTooltipOpen(true);
+        });
     }
   }
 
   function handleGetMovies() {
     setIsActivePreloader(true);
 
-    moviesApi.getMovies()
+    moviesApi
+      .getMovies()
       .then((movies) => {
         setMovies(movies);
         localStorage.setItem('movies', JSON.stringify(movies));
@@ -166,19 +170,20 @@ function App() {
       })
       .finally(() => {
         setIsActivePreloader(false);
-      })
+      });
   }
 
   function handleLoadLocalMovies() {
     const movies = JSON.parse(localStorage.getItem('movies'));
 
-    if(movies) {
+    if (movies) {
       setMovies(movies);
     }
   }
 
   function handleSaveMovie(movie) {
-    mainApi.saveMovie(movie)
+    mainApi
+      .saveMovie(movie)
       .then((newMovie) => {
         setSavedMovies([...savedMovies, newMovie]);
       })
@@ -191,7 +196,8 @@ function App() {
   }
 
   function handleDeleteMovie(id) {
-    mainApi.deleteMovie(id)
+    mainApi
+      .deleteMovie(id)
       .then(() => {
         setSavedMovies(savedMovies.filter((item) => item.movieId !== id));
       })
@@ -208,7 +214,8 @@ function App() {
   }
 
   function handleUpdateProfile(name, email) {
-    mainApi.editProfile(name, email)
+    mainApi
+      .editProfile(name, email)
       .then((res) => {
         setCurrentUser(res);
         setTooltipSuccess(true);
@@ -217,32 +224,34 @@ function App() {
       .catch((err) => {
         console.log(err);
         setTooltipSuccess(false);
-        if(err === 'Ошибка: 409') {
+        if (err === 'Ошибка: 409') {
           return setTooltipType(errorTextConflict);
         }
         setTooltipType(errorText);
       })
       .finally(() => {
         setIsInfoTooltipOpen(true);
-      })
+      });
   }
 
   function handleRegister(name, email, password) {
-    mainApi.register(name, email, password)
+    mainApi
+      .register(name, email, password)
       .then(() => {
         handleLoggin(email, password);
       })
       .catch((err) => {
         console.log(err);
-        if(err === 'Ошибка: 409') {
+        if (err === 'Ошибка: 409') {
           return setFormError(errorTextConflict);
         }
         setFormError(errorText);
-      })
+      });
   }
 
   function handleLoggin(email, password) {
-    mainApi.authorize(email, password)
+    mainApi
+      .authorize(email, password)
       .then((res) => {
         setCurrentUser(res.user);
         setLoggedIn(true);
@@ -255,7 +264,8 @@ function App() {
   }
 
   function handleTokenCheck() {
-    mainApi.getUser()
+    mainApi
+      .getUser()
       .then((res) => {
         setLoggedIn(true);
         setCurrentUser(res);
@@ -266,7 +276,8 @@ function App() {
   }
 
   function handleLogout() {
-    mainApi.logout()
+    mainApi
+      .logout()
       .then(() => {
         setLoggedIn(false);
         navigate('/');
@@ -293,52 +304,112 @@ function App() {
 
   useEffect(() => {
     handleStartCountMovies();
-  }, [foundMovies])
+  }, [foundMovies]);
 
   useEffect(() => {
-    if(loggedIn) {
+    if (loggedIn) {
       handleGetSavedMovies();
     }
   }, [loggedIn]);
 
-  return(
+  return (
     <div className='App'>
       <CurrentUserContext.Provider value={currentUser}>
-      <Header><Navigation loggedIn={loggedIn} handleBtnNavClick={handleBtnNavClick} /></Header>
-      <Routes>
-        <Route path='/signup' element={loggedIn === true ? <Navigate to='/movies'/> : <Register onRegister={handleRegister} reqError={formError} />} />
-        <Route path='/signin' element={loggedIn === true ? <Navigate to='/movies'/> : <Login onLogin={handleLoggin} reqError={formError} />} />
-        <Route exact path='/' element={<Main />} />
-        <Route path='/movies' element={
-          <ProtectedRoute loggedIn={loggedIn}>
-            <Movies handleLoadLocalMovies={handleLoadLocalMovies}>
-              <SearchForm handleGetMovies={handleGetMovies} movies={movies} handleFliterMovies={handleFliterMovies} />
-              <MoviesCardList countMovies={countMovies} handleCountMovies={handleCountMovies} isActivePreloader={isActivePreloader} foundMovies={foundMovies} notFound={notFound} handleCheckSaveMovie={handleCheckSaveMovie} handleSaveMovie={handleSaveMovie} handleDeleteMovie={handleDeleteMovie} />
-            </Movies>
-          </ProtectedRoute>
-        } />
-        <Route path='/saved-movies' element={
-          <ProtectedRoute loggedIn={loggedIn}>
-            <SavedMovies handleGetSavedMovies={handleGetSavedMovies}>
-              <SearchForm movies={savedMovies} handleFliterMovies={handleFliterMovies}/>
-              <MoviesCardList countMovies={countMovies} handleCountMovies={handleCountMovies} isActivePreloader={isActivePreloader} foundMovies={foundMovies} notFound={notFound} handleCheckSaveMovie={handleCheckSaveMovie} handleSaveMovie={handleSaveMovie} handleDeleteMovie={handleDeleteMovie} />
-            </SavedMovies>
-          </ProtectedRoute>
-        } />
-        <Route path='/profile' element={
-          <ProtectedRoute loggedIn={loggedIn}>
-            <Profile onEdit={handleUpdateProfile} onLogout={handleLogout} />
-          </ProtectedRoute>
-        } />
-        <Route path='*' element={<NotFound />} />
-      </Routes>
-      <Footer />
-      <SideBar isHidden={isMenuHidden} handleBtnNavClick={handleBtnNavClick} onOutSideClick={closeOnOutside} />
-      <InfoTooltip status={tooltipSuccess} typeError={tooltipType} isOpen={isInfoTooltipOpen} onClose={closePopup} onOutSideClick={closeOnOutside} />
+        <Header>
+          <Navigation loggedIn={loggedIn} handleBtnNavClick={handleBtnNavClick} />
+        </Header>
+        <Routes>
+          <Route
+            path='/signup'
+            element={
+              loggedIn === true ? (
+                <Navigate to='/movies' />
+              ) : (
+                <Register onRegister={handleRegister} reqError={formError} />
+              )
+            }
+          />
+          <Route
+            path='/signin'
+            element={
+              loggedIn === true ? (
+                <Navigate to='/movies' />
+              ) : (
+                <Login onLogin={handleLoggin} reqError={formError} />
+              )
+            }
+          />
+          <Route exact path='/' element={<Main />} />
+          <Route
+            path='/movies'
+            element={
+              <ProtectedRoute loggedIn={loggedIn}>
+                <Movies handleLoadLocalMovies={handleLoadLocalMovies}>
+                  <SearchForm
+                    handleGetMovies={handleGetMovies}
+                    movies={movies}
+                    handleFliterMovies={handleFliterMovies}
+                  />
+                  <MoviesCardList
+                    countMovies={countMovies}
+                    handleCountMovies={handleCountMovies}
+                    isActivePreloader={isActivePreloader}
+                    foundMovies={foundMovies}
+                    notFound={notFound}
+                    handleCheckSaveMovie={handleCheckSaveMovie}
+                    handleSaveMovie={handleSaveMovie}
+                    handleDeleteMovie={handleDeleteMovie}
+                  />
+                </Movies>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/saved-movies'
+            element={
+              <ProtectedRoute loggedIn={loggedIn}>
+                <SavedMovies handleGetSavedMovies={handleGetSavedMovies}>
+                  <SearchForm movies={savedMovies} handleFliterMovies={handleFliterMovies} />
+                  <MoviesCardList
+                    countMovies={countMovies}
+                    handleCountMovies={handleCountMovies}
+                    isActivePreloader={isActivePreloader}
+                    foundMovies={foundMovies}
+                    notFound={notFound}
+                    handleCheckSaveMovie={handleCheckSaveMovie}
+                    handleSaveMovie={handleSaveMovie}
+                    handleDeleteMovie={handleDeleteMovie}
+                  />
+                </SavedMovies>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/profile'
+            element={
+              <ProtectedRoute loggedIn={loggedIn}>
+                <Profile onEdit={handleUpdateProfile} onLogout={handleLogout} />
+              </ProtectedRoute>
+            }
+          />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+        <Footer />
+        <SideBar
+          isHidden={isMenuHidden}
+          handleBtnNavClick={handleBtnNavClick}
+          onOutSideClick={closeOnOutside}
+        />
+        <InfoTooltip
+          status={tooltipSuccess}
+          typeError={tooltipType}
+          isOpen={isInfoTooltipOpen}
+          onClose={closePopup}
+          onOutSideClick={closeOnOutside}
+        />
       </CurrentUserContext.Provider>
     </div>
   );
 }
-
 
 export default App;

@@ -12,7 +12,7 @@ function Profile({ onEdit, onLogout }) {
 
   function handleChangeProfile(evt) {
     validation.handleChange(evt);
-    if(evt.target.name === 'name') {
+    if (evt.target.name === 'name') {
       setName(evt.target.value);
     } else {
       setEmail(evt.target.value);
@@ -31,23 +31,63 @@ function Profile({ onEdit, onLogout }) {
     setEmail(currentUser.email);
   }, [currentUser]);
 
-  return(
+  return (
     <section className='profile'>
       <h2 className='profile__title'>{`Привет, ${currentUser.name}`}</h2>
       <form className='form-profile' onSubmit={handleSubmit} noValidate>
-      <div className='form-profile__container'>
-        <label className='form-profile__input-name' htmlFor='profile-name-input'>Имя</label>
-        <input type='text' value={name} onChange={handleChangeProfile} className={`form-profile__input ${validation.errors.name ? 'form-profile__input_invalid' : ''}`} id='profile-name-input' name='name' placeholder='Введите имя' minLength='2' maxLength='30' required></input>
-      </div>
-      <span className='form-profile__input-error' id='profile-name-input-error'>{validation.errors.name}</span>
-      <div className='form-profile__container'>
-        <label className='form-profile__input-name' htmlFor='profile-email-input'>E-mail</label>
-        <input type='email' value={email} onChange={handleChangeProfile} className={`form-profile__input ${validation.errors.email ? 'form-profile__input_invalid' : ''}`} id='profile-email-input' name='email' placeholder='Введите E-mail' required></input>
-      </div>
-      <span className='form-profile__input-error' id='profile-name-input-error'>{validation.errors.email}</span>
-      <button type='submit' className='form-profile__submit-btn' disabled={!validation.isValid && true}>Редактировать</button>
+        <div className='form-profile__container'>
+          <label className='form-profile__input-name' htmlFor='profile-name-input'>
+            Имя
+          </label>
+          <input
+            type='text'
+            value={name}
+            onChange={handleChangeProfile}
+            className={`form-profile__input ${
+              validation.errors.name ? 'form-profile__input_invalid' : ''
+            }`}
+            id='profile-name-input'
+            name='name'
+            placeholder='Введите имя'
+            minLength='2'
+            maxLength='30'
+            required
+          ></input>
+        </div>
+        <span className='form-profile__input-error' id='profile-name-input-error'>
+          {validation.errors.name}
+        </span>
+        <div className='form-profile__container'>
+          <label className='form-profile__input-name' htmlFor='profile-email-input'>
+            E-mail
+          </label>
+          <input
+            type='email'
+            value={email}
+            onChange={handleChangeProfile}
+            className={`form-profile__input ${
+              validation.errors.email ? 'form-profile__input_invalid' : ''
+            }`}
+            id='profile-email-input'
+            name='email'
+            placeholder='Введите E-mail'
+            required
+          ></input>
+        </div>
+        <span className='form-profile__input-error' id='profile-name-input-error'>
+          {validation.errors.email}
+        </span>
+        <button
+          type='submit'
+          className='form-profile__submit-btn'
+          disabled={!validation.isValid && true}
+        >
+          Редактировать
+        </button>
       </form>
-      <Link to='/' className='profile__link' onClick={onLogout}>Выйти из аккаунта</Link>
+      <Link to='/' className='profile__link' onClick={onLogout}>
+        Выйти из аккаунта
+      </Link>
     </section>
   );
 }

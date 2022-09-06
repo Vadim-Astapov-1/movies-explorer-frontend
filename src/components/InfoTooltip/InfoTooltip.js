@@ -4,7 +4,7 @@ import successIcon from '../../images/success-icon.svg';
 import errorIcon from '../../images/error-icon.svg';
 
 function InfoTooltip({ status, typeError, isOpen, onClose, onOutSideClick }) {
-  return(
+  return (
     <div className={`popup ${isOpen ? 'popup_opened' : ''}`} onClick={onOutSideClick}>
       <div className='popup__container'>
         <button className='popup__close-button' type='button' onClick={onClose}></button>

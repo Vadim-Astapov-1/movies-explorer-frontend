@@ -6,11 +6,7 @@ function SavedMovies({ handleGetSavedMovies, children }) {
     handleGetSavedMovies();
   }, []);
 
-  return(
-    <section className='saved-movies'>
-      {children}
-    </section>
-  );
+  return <section className='saved-movies'>{children}</section>;
 }
 
 export default SavedMovies;

@@ -1,6 +1,8 @@
 // Для дополнения url изображений
 export const serverLink = 'https://api.nomoreparties.co';
 
+export const regex = /^[a-zа-яё\s-]+$/i;
+
 export const headerRouters = [
   '/',
   '/movies',
